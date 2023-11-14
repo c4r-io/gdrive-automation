@@ -14,6 +14,7 @@ knitr::opts_chunk$set(
 # gdrive-automation
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/c4r-io/gdrive-automation/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/c4r-io/gdrive-automation/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of gdrive-automation is to automate processing and tasks related to the C4R Shared Drive, to aid in synchronization of states and content.
