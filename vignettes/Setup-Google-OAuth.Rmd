@@ -1,0 +1,60 @@
+---
+title: "Setup-Google-OAuth"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Setup-Google-OAuth}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(gdrive.automation)
+library(googledrive)
+```
+
+The main goal we want to do is authorize programmatic access to the google drive. When we use `googledrive` in an interactive session, it will prompt us to authorize access. Our steps therefore are:
+1. authorize access
+2. save the "token" that authenticates us for access
+3. encrypt the token
+4. save the decryption key as an environmental variable
+
+Results:
+* The encrypted token can then be shared without concern.
+* The decryption key can live as a github secret that enables github actions to use the token for access
+
+```{r create token}
+# set up a local file cache for a new token
+options(gargle_oauth_cache = ".secrets")
+gargle::gargle_oauth_cache()
+
+# create a new token
+drive_auth(email = TRUE, scopes = "https://www.googleapis.com/auth/drive")
+my_token <- drive_token()
+```
+
+```{r setup encryption key}
+key <- gargle::secret_make_key()
+cat(paste0("GDRIVE_KEY=", key)) # copy the result of this string
+usethis::edit_r_environ() # run this to open your .Renviron file
+
+# paste the result into that file
+# restart your R session
+```
+
+```{r encrypt a new token and save it in inst/secrets/gs4-auth.token}
+gargle::secret_write_rds(
+    x = my_token, 
+    path = ".secrets/gdrive-token.rds", 
+    key = "GDRIVE_KEY"
+)
+
+# check that the token can be decrypted
+stopifnot(!is.null(decrypt_gdrive_token()))
+```
