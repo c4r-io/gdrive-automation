@@ -4,3 +4,6 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^\.secrets$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
