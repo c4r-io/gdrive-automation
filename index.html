@@ -62,18 +62,30 @@
 <!-- badges: start -->
 
 <p>The goal of gdrive-automation is to automate processing and tasks related to the C4R Shared Drive, to aid in synchronization of states and content.</p>
-<p>Specific actions include: * check for updates in Unit Roadmaps and process accordingly (send notifications, update files) * check for updates in the Unit Tracking spreadsheet and process accordingly (send notifications, update files)</p>
+<p>Specific actions include:</p>
+<ul>
+<li>check for updates in Unit Roadmaps and process accordingly (send notifications, update files)</li>
+<li>check for updates in the Unit Tracking spreadsheet and process accordingly (send notifications, update files)</li>
+</ul>
 </div>
 <div class="section level1">
 <h1 id="data-model">Data Model<a class="anchor" aria-label="anchor" href="#data-model"></a>
 </h1>
-<p>Data about a Unit and its Status is shared across two distinct files: * the Unit Roadmap (“roadmap”) specific to the unit - a google doc * the overall Unit Tracking spreadsheet (“tracker”) - a google sheet</p>
-<p>The data that is unique in the roadmap is: * metadata about the unit (title, description, mini-units, activities)</p>
+<p>Data about a Unit and its Status is shared across two distinct files:</p>
+<ul>
+<li>the Unit Roadmap (“roadmap”) specific to the unit - a google doc</li>
+<li>the overall Unit Tracking spreadsheet (“tracker”) - a google sheet</li>
+</ul>
+<p>The data that is unique in the roadmap is:</p>
+<ul>
+<li>metadata about the unit (title, description, mini-units, activities)</li>
+</ul>
 <div class="section level2">
 <h2 id="resolving-status-updates">Resolving Status Updates<a class="anchor" aria-label="anchor" href="#resolving-status-updates"></a>
 </h2>
 <p>Both the roadmap and the tracker will contain status indicators for various components / phases of a unit. (The technical limitation here is embedding in the google doc an interactive interface for data that is stored elsewhere.)</p>
-<p>There are 4 states for the status, which generally progresses from: “Not started” -&gt; “Submitted” -&gt; “Under review” -&gt; “Approved”</p>
+<p>There are 4 states for the status, which generally progresses from:</p>
+<p>“Not started” -&gt; “Submitted” -&gt; “Under review” -&gt; “Approved”</p>
 <p>The below documentation clarifies how to resolve situations where the status for a particular item is different in the roadmap vs. the tracker.</p>
 <div class="section level3">
 <h3 id="case-0-identical-status">Case 0. Identical Status<a class="anchor" aria-label="anchor" href="#case-0-identical-status"></a>
@@ -112,7 +124,12 @@
 <div class="section level4">
 <h4 id="case-2c-anything---approved">Case 2c. {anything} -&gt; “Approved”<a class="anchor" aria-label="anchor" href="#case-2c-anything---approved"></a>
 </h4>
-<p>(if change is for item that is for METER to review) 1. Update tracker to match. 2. Send notifications as necessary. 3. Log the change.</p>
+<p>(if change is for item that is for METER to review)</p>
+<ol style="list-style-type: decimal">
+<li>Update tracker to match.</li>
+<li>Send notifications as necessary.</li>
+<li>Log the change.</li>
+</ol>
 </div>
 <div class="section level4">
 <h4 id="case-2d-anything-else">Case 2d. Anything else.<a class="anchor" aria-label="anchor" href="#case-2d-anything-else"></a>
