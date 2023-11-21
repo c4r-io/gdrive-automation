@@ -52,11 +52,21 @@ OAuth token, and an environmental variable with the key to decrypt the token.</p
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">decrypt_gdrive_token</span><span class="op">(</span></span>
-<span>  token_RDS <span class="op">=</span> <span class="st">".secrets/gdrive-token.rds"</span>,</span>
+<span>  token_file <span class="op">=</span> <span class="st">".secrets/gdrive-token.rds"</span>,</span>
 <span>  decrypt_env_var <span class="op">=</span> <span class="st">"GDRIVE_KEY"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
+    <div class="section level2">
+    <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
+    <dl><dt>token_file</dt>
+<dd><p>filepath to the encrypted token file</p></dd>
+
+
+<dt>decrypt_env_var</dt>
+<dd><p>name of the environmental variable that is the decryption key</p></dd>
+
+</dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
