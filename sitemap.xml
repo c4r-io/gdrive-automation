@@ -22,6 +22,27 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/URL_db_units.html</loc>
+  </url>
+  <url>
+    <loc>/reference/access_log.html</loc>
+  </url>
+  <url>
+    <loc>/reference/decrypt_gdrive_token.html</loc>
+  </url>
+  <url>
+    <loc>/reference/do_auth.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/log_action.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_db_units.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_unit_tasks.html</loc>
   </url>
 </urlset>
