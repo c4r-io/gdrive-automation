@@ -2,7 +2,7 @@
 % Please edit documentation in R/api-functions.R
 \name{URL_db_units}
 \alias{URL_db_units}
-\title{Default URL for the googlesheet with the master list of links for all units}
+\title{Default URL for the googlesheet with the central DB of all units}
 \usage{
 URL_db_units()
 }
@@ -10,5 +10,5 @@ URL_db_units()
 string with the URL for the
 }
 \description{
-Default URL for the googlesheet with the master list of links for all units
+Default URL for the googlesheet with the central DB of all units
 }

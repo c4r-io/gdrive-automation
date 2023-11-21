@@ -12,7 +12,7 @@ RoxygenNote: 7.2.3
 Imports: 
     gargle,
     googledrive,
-    googlesheets4
+    googlesheets4,
 Suggests: 
     knitr,
     rmarkdown

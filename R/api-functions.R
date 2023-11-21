@@ -34,7 +34,7 @@ decrypt_gdrive_token <- function(token_file = ".secrets/gdrive-token.rds",
     invisible(token)
 }
 
-#' Default URL for the googlesheet with the master list of links for all units
+#' Default URL for the googlesheet with the central DB of all units
 #'
 #' @return string with the URL for the
 #' @export

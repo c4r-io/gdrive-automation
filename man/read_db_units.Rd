@@ -7,7 +7,7 @@
 read_db_units(id = URL_db_units())
 }
 \arguments{
-\item{id}{The URL for the googlesheet with the master list of links for all units}
+\item{id}{The URL for the googlesheet with the central DB of all units}
 }
 \value{
 A tibble

@@ -2,8 +2,10 @@
 
 export(URL_db_units)
 export(access_log)
+export(check_roadmap_files)
 export(decrypt_gdrive_token)
 export(do_auth)
+export(find_roadmap_files)
 export(log_action)
 export(read_db_units)
 export(read_unit_tasks)
