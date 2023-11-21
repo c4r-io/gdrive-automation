@@ -5,9 +5,14 @@
 \title{Get a Token for access to google drive}
 \usage{
 decrypt_gdrive_token(
-  token_RDS = ".secrets/gdrive-token.rds",
+  token_file = ".secrets/gdrive-token.rds",
   decrypt_env_var = "GDRIVE_KEY"
 )
+}
+\arguments{
+\item{token_file}{filepath to the encrypted token file}
+
+\item{decrypt_env_var}{name of the environmental variable that is the decryption key}
 }
 \value{
 an OAuth token
