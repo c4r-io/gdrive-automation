@@ -28,10 +28,16 @@
     <loc>/reference/access_log.html</loc>
   </url>
   <url>
+    <loc>/reference/check_roadmap_files.html</loc>
+  </url>
+  <url>
     <loc>/reference/decrypt_gdrive_token.html</loc>
   </url>
   <url>
     <loc>/reference/do_auth.html</loc>
+  </url>
+  <url>
+    <loc>/reference/find_roadmap_files.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
