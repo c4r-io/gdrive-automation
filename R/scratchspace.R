@@ -15,5 +15,15 @@ if (run)
                                shared_drive = c4r_drive)
     downloaded_file <- drive_download(roadmap_file, type = "rtf")
 
+    # access info on all units
+    db_units <- read_db_units()
+
+    test_unit_url <- db_units$`Tasks URL`[1]
+    test_unit_sheet <- db_units$`Task Sheet Name`[1]
+
+    unit_tasks <- read_unit_tasks(test_unit_url, test_unit_sheet)
+
+
+
 
 }
