@@ -13,6 +13,9 @@ Imports:
     gargle,
     googledrive,
     googlesheets4,
+    magrittr,
+    officer,
+    stringr
 Suggests: 
     knitr,
     rmarkdown

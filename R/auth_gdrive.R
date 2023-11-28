@@ -33,12 +33,3 @@ decrypt_gdrive_token <- function(token_file = ".secrets/gdrive-token.rds",
 
     invisible(token)
 }
-
-#' Default URL for the googlesheet with the central DB of all units
-#'
-#' @return string with the URL for the
-#' @export
-URL_db_units <- function()
-{
-   "https://docs.google.com/spreadsheets/d/1cdEwmaUIXPvEIdVOow8tQCPjsz7hseO4h7aaS8ylImA/edit#gid=472058338"
-}
