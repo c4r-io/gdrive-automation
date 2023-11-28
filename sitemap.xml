@@ -28,6 +28,9 @@
     <loc>/reference/access_log.html</loc>
   </url>
   <url>
+    <loc>/reference/add_status.html</loc>
+  </url>
+  <url>
     <loc>/reference/check_roadmap_files.html</loc>
   </url>
   <url>
@@ -40,10 +43,19 @@
     <loc>/reference/find_roadmap_files.html</loc>
   </url>
   <url>
+    <loc>/reference/find_roadmap_phases.html</loc>
+  </url>
+  <url>
+    <loc>/reference/find_roadmap_signoffs.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/log_action.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pipe.html</loc>
   </url>
   <url>
     <loc>/reference/read_db_units.html</loc>
