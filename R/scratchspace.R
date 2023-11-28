@@ -37,10 +37,7 @@ if (run)
     ### signoffs for phase 1
     find_status_phase_1(table_cells, phase_labels, signoff_labels)
     find_status_phase_2(table_cells, phase_labels, signoff_labels)
-
-
-
-
+    find_status_phase_3(table_cells, phase_labels, signoff_labels)
 
 
 

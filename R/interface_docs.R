@@ -125,6 +125,38 @@ find_status_phase_2 <- function(table_cells, phase_labels, signoff_labels)
                 phase = PHASE, task = "Phase 2", signoff = "CENTER")
 }
 
+#' @describeIn find_status_phase_1 Find Phase 3 Statuses
+find_status_phase_3 <- function(table_cells, phase_labels, signoff_labels)
+{
+    PHASE <- 3
+
+    # find location and check
+    signpost_table_id <- min(which(grepl("comprise the short-form",
+                                         table_cells$text)))
+    signpost_id_shift <- 2
+    approvals <- table_cells[signpost_table_id + signpost_id_shift, ]
+    check_signoff_doc_index(approvals$doc_index,
+                            phase_labels, signoff_labels,
+                            phase = PHASE)
+
+    # extract statuses
+    status_short <- find_status(approvals$text, str_glue("({STATUSES()})[\\s\\w-]*Review by CENTER"),
+                                phase = PHASE, task = "Short-form Unit Presentation", signoff = "CENTER")
+
+    signpost_table_id <- min(which(grepl("contents of the full unit",
+                                         table_cells$text)))
+    signpost_id_shift <- 2
+    approvals <- table_cells[signpost_table_id + signpost_id_shift, ]
+    check_signoff_doc_index(approvals$doc_index,
+                            phase_labels, signoff_labels,
+                            phase = PHASE, signoff = PHASE + 1)
+
+    # extract statuses
+    status_long <- find_status(approvals$text, str_glue("({STATUSES()})[\\s\\w-]*Review by CENTER"),
+                               phase = PHASE, task = "Long-form Unit Presentation", signoff = "CENTER")
+
+    rbind(status_short, status_long)
+}
 
 #' Check That Doc Index for Sign-Off is in Range
 #'
@@ -132,16 +164,19 @@ find_status_phase_2 <- function(table_cells, phase_labels, signoff_labels)
 #' @param phase_labels a data.frame, subset of the output from \link[officer]{docx_summary} that are the paragraphs corresponding to the labels of the start of each phase
 #' @param signoff_labels a data.frame, subset of the output from \link[officer]{docx_summary} that are the paragraphs corresponding to the "Sign offs" headings
 #' @param phase which phase to check
+#' @param signoff which signoff to check
 #'
 #' @return NULL
 #' @export
-check_signoff_doc_index <- function(doc_index, phase_labels, signoff_labels, phase)
+check_signoff_doc_index <- function(doc_index,
+                                    phase_labels, signoff_labels,
+                                    phase, signoff = phase)
 {
     stopifnot(
         doc_index > phase_labels$doc_index[phase],
         doc_index  < phase_labels$doc_index[phase + 1],
-        doc_index > signoff_labels$doc_index[phase],
-        doc_index <= signoff_labels$doc_index[phase] + 3)
+        doc_index > signoff_labels$doc_index[signoff],
+        doc_index <= signoff_labels$doc_index[signoff] + 3)
 }
 
 
