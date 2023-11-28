@@ -40,16 +40,24 @@ find_roadmap_files <- function()
 #' Find the labels for each Phase
 #'
 #' @param content a data.frame (output from \link[officer]{docx_summary})
+#' @param NUM_PHASES number of phases to expect
 #'
 #' @return a data.frame
 #' @export
-find_roadmap_phases <- function(content)
+find_roadmap_phases <- function(content, NUM_PHASES = 7)
 {
+    phase_pattern <- "Phase\\s*(\\d+)"
     headings_1 <- subset(content,
                          content_type %in% "paragraph" &
                              style_name %in% "heading 1")
-    idx <- which(grepl("Phase \\d", headings_1$text))
-    headings_1[idx, ]
+    idx <- which(grepl(phase_pattern, headings_1$text))
+    phase_labels <- headings_1[idx, ]
+
+    # check if numbers of the labels are c(1, 2, ..., NUM_PHASES)
+    phase_label_ids <- stringr::str_extract(phase_labels$text, phase_pattern, group = 1)
+    stopifnot(identical(as.integer(phase_label_ids), seq(NUM_PHASES)))
+
+    phase_labels
 }
 
 #' Find the signoff sections
@@ -64,22 +72,100 @@ find_roadmap_signoffs <- function(content)
                          content_type %in% "paragraph" &
                              style_name %in% c("heading 2", "heading 3"))
     idx <- which(grepl("Sign[ -][Oo]ffs?", headings_23$text))
-    # headings_23[idx, ]
+    headings_23[idx, ]
 }
+
+#' Find Phase 1 Statuses
+#'
+#' @param table_cells a data.frame, subset of the output from \link[officer]{docx_summary} that are the table cells
+#' @inheritParams check_signoff_doc_index
+#'
+#' @return a data.frame
+#' @export
+find_status_phase_1 <- function(table_cells, phase_labels, signoff_labels)
+{
+    PHASE <- 1
+
+    # find location and check
+    signpost_table_id <- min(which(grepl("Instructions will be provided",
+                                           table_cells$text)))
+    signpost_id_shift <- 5
+    approvals <- table_cells[signpost_table_id + signpost_id_shift, ]
+    check_signoff_doc_index(approvals$doc_index,
+                            phase_labels, signoff_labels,
+                            phase = PHASE)
+
+    # extract statuses
+    rbind(
+        find_status(approvals$text, str_glue("({STATUSES()})\\s*Review by CENTER"),
+                    phase = PHASE, task = "Phase 1", signoff = "CENTER"),
+        find_status(approvals$text, str_glue("({STATUSES()})\\s*Topic Approval by NIH/NINDS"),
+                    phase = PHASE, task = "Phase 1", signoff = "NIH/NINDS PO"),
+        find_status(approvals$text, str_glue("({STATUSES()})\\s*Review by SC"),
+                    phase = PHASE, task = "Phase 1", signoff = "SC")
+    )
+}
+
+#' @describeIn find_status_phase_1 Find Phase 2 Statuses
+find_status_phase_2 <- function(table_cells, phase_labels, signoff_labels)
+{
+    PHASE <- 2
+
+    # find location and check
+    signpost_table_id <- min(which(grepl("The presentation should convey",
+                                         table_cells$text)))
+    signpost_id_shift <- 2
+    approvals <- table_cells[signpost_table_id + signpost_id_shift, ]
+    check_signoff_doc_index(approvals$doc_index,
+                            phase_labels, signoff_labels,
+                            phase = PHASE)
+
+    # extract statuses
+    find_status(approvals$text, str_glue("({STATUSES()})\\s*Review by CENTER"),
+                phase = PHASE, task = "Phase 2", signoff = "CENTER")
+}
+
+
+#' Check That Doc Index for Sign-Off is in Range
+#'
+#' @param doc_index index for the paragraph with the signoff
+#' @param phase_labels a data.frame, subset of the output from \link[officer]{docx_summary} that are the paragraphs corresponding to the labels of the start of each phase
+#' @param signoff_labels a data.frame, subset of the output from \link[officer]{docx_summary} that are the paragraphs corresponding to the "Sign offs" headings
+#' @param phase which phase to check
+#'
+#' @return NULL
+#' @export
+check_signoff_doc_index <- function(doc_index, phase_labels, signoff_labels, phase)
+{
+    stopifnot(
+        doc_index > phase_labels$doc_index[phase],
+        doc_index  < phase_labels$doc_index[phase + 1],
+        doc_index > signoff_labels$doc_index[phase],
+        doc_index <= signoff_labels$doc_index[phase] + 3)
+}
+
 
 #' Create a status row
 #'
-#' @param df data.frame of status to be appended to
 #' @param string passed to \link[stringr]{str_extract}
 #' @param pattern passed to \link[stringr]{str_extract}
+#' @param phase number of the phase in the new status row
 #' @param task name of the task in the new status row
 #' @param signoff name of the signoff in the new status row
 #'
 #' @return a data.frame
 #' @export
-add_status <- function(df, string, pattern, task, signoff)
+find_status <- function(string, pattern, phase, task, signoff)
 {
     status <- stringr::str_extract(string, pattern, group = 1)
-    rbind(df,
-          c(task = task, signoff = signoff, status = status))
+    c(phase = phase, task = task, signoff = signoff, status = status)
+}
+
+#' Regex Pattern for Allowed Statuses
+#'
+#' @return A character string
+#' @export
+STATUSES <- function()
+{
+    return("Submitted|Under review|Approved|Not started")
 }

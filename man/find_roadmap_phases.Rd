@@ -4,10 +4,12 @@
 \alias{find_roadmap_phases}
 \title{Find the labels for each Phase}
 \usage{
-find_roadmap_phases(content)
+find_roadmap_phases(content, NUM_PHASES = 7)
 }
 \arguments{
 \item{content}{a data.frame (output from \link[officer]{docx_summary})}
+
+\item{NUM_PHASES}{number of phases to expect}
 }
 \value{
 a data.frame
