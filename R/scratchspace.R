@@ -1,6 +1,9 @@
 run = FALSE
 if (run)
 {
+    parsing_dat <- read.csv("inst/signoff_parsing.csv")
+    use_data(parsing_dat, overwrite = TRUE)
+
     do_auth()
 
     # access info on all units
@@ -26,23 +29,10 @@ if (run)
     roadmap <- officer::read_docx(dl_path)
     content <- officer::docx_summary(roadmap)
 
-    ## find phase label and signoff labels
-    phase_labels <- find_roadmap_phases(content)
-    signoff_labels <- find_roadmap_signoffs(content)
-
-    ## extract signoff statuses
-    signoff_df <- data.frame(task = character(), signoff = character(), status = character())
-    table_cells <- subset(content, content_type %in% "table cell")
-
-    ### signoffs for phase 1
-    find_status_phase_1(table_cells, phase_labels, signoff_labels)
-    find_status_phase_2(table_cells, phase_labels, signoff_labels)
-    find_status_phase_3(table_cells, phase_labels, signoff_labels)
-
-
+    ## find statuses
+    find_statuses(content)
 
 }
-
 
 
 

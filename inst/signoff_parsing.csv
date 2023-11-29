@@ -1,0 +1,23 @@
+phase,parse_group,task,signoff,label
+1,1,Phase 1,CENTER,Review by CENTER
+1,1,Phase 1,NIH/NINDS PO,Topic Approval by NIH/NINDS
+1,1,Phase 1,SC,Review by SC
+2,1,Phase 2,CENTER,Review by CENTER
+3,1,Short-form Unit Presentation,CENTER,Short-form Unit Presentation Review by CENTER
+3,2,Long-form Unit Presentation,CENTER,Long-form Unit Presentation Review by CENTER
+4,1,Activity Tech Specs,METER,Activity Tech Specs by METER
+4,1,Activity Tech Specs,CENTER,Activity Tech Specs by CENTER
+4,1,Prototype,CENTER,Prototype by CENTER
+4,1,Activity Demonstration,METER,Prototype demonstration to METER
+5,1,Instructor Guide,CENTER,Review by CENTER
+5,1,Script,METER,Script Review by METER
+5,1,Video,METER,Video Review by METER
+5,1,Short-form Unit,CENTER,Short-form Unit Review by CENTER
+5,1,Short-form Unit,METER,Short-form Unit Review by METER
+5,2,Script,METER,Script Review by METER
+5,2,Video,METER,Video Review by METER
+5,2,Long-form Unit,CENTER,Long-form Unit Review by CENTER
+5,2,Long-form Unit,METER,Long-form Unit Review by METER
+6,1,Phase 6,METER,Review by METER
+6,1,Phase 6,CENTER,Review by CENTER
+6,1,Phase 6,SC,Review by SC

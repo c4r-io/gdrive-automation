@@ -69,131 +69,94 @@ find_roadmap_phases <- function(content, NUM_PHASES = 7)
 find_roadmap_signoffs <- function(content)
 {
     headings_23 <- subset(content,
-                         content_type %in% "paragraph" &
-                             style_name %in% c("heading 2", "heading 3"))
+                          content_type %in% "paragraph" &
+                              style_name %in% c("heading 2", "heading 3"))
     idx <- which(grepl("Sign[ -][Oo]ffs?", headings_23$text))
     headings_23[idx, ]
 }
 
-#' Find Phase 1 Statuses
+#' Find Statuses
 #'
-#' @param table_cells a data.frame, subset of the output from \link[officer]{docx_summary} that are the table cells
-#' @inheritParams check_signoff_doc_index
-#'
-#' @return a data.frame
-#' @export
-find_status_phase_1 <- function(table_cells, phase_labels, signoff_labels)
-{
-    PHASE <- 1
-
-    # find location and check
-    signpost_table_id <- min(which(grepl("Instructions will be provided",
-                                           table_cells$text)))
-    signpost_id_shift <- 5
-    approvals <- table_cells[signpost_table_id + signpost_id_shift, ]
-    check_signoff_doc_index(approvals$doc_index,
-                            phase_labels, signoff_labels,
-                            phase = PHASE)
-
-    # extract statuses
-    rbind(
-        find_status(approvals$text, str_glue("({STATUSES()})\\s*Review by CENTER"),
-                    phase = PHASE, task = "Phase 1", signoff = "CENTER"),
-        find_status(approvals$text, str_glue("({STATUSES()})\\s*Topic Approval by NIH/NINDS"),
-                    phase = PHASE, task = "Phase 1", signoff = "NIH/NINDS PO"),
-        find_status(approvals$text, str_glue("({STATUSES()})\\s*Review by SC"),
-                    phase = PHASE, task = "Phase 1", signoff = "SC")
-    )
-}
-
-#' @describeIn find_status_phase_1 Find Phase 2 Statuses
-find_status_phase_2 <- function(table_cells, phase_labels, signoff_labels)
-{
-    PHASE <- 2
-
-    # find location and check
-    signpost_table_id <- min(which(grepl("The presentation should convey",
-                                         table_cells$text)))
-    signpost_id_shift <- 2
-    approvals <- table_cells[signpost_table_id + signpost_id_shift, ]
-    check_signoff_doc_index(approvals$doc_index,
-                            phase_labels, signoff_labels,
-                            phase = PHASE)
-
-    # extract statuses
-    find_status(approvals$text, str_glue("({STATUSES()})\\s*Review by CENTER"),
-                phase = PHASE, task = "Phase 2", signoff = "CENTER")
-}
-
-#' @describeIn find_status_phase_1 Find Phase 3 Statuses
-find_status_phase_3 <- function(table_cells, phase_labels, signoff_labels)
-{
-    PHASE <- 3
-
-    # find location and check
-    signpost_table_id <- min(which(grepl("comprise the short-form",
-                                         table_cells$text)))
-    signpost_id_shift <- 2
-    approvals <- table_cells[signpost_table_id + signpost_id_shift, ]
-    check_signoff_doc_index(approvals$doc_index,
-                            phase_labels, signoff_labels,
-                            phase = PHASE)
-
-    # extract statuses
-    status_short <- find_status(approvals$text, str_glue("({STATUSES()})[\\s\\w-]*Review by CENTER"),
-                                phase = PHASE, task = "Short-form Unit Presentation", signoff = "CENTER")
-
-    signpost_table_id <- min(which(grepl("contents of the full unit",
-                                         table_cells$text)))
-    signpost_id_shift <- 2
-    approvals <- table_cells[signpost_table_id + signpost_id_shift, ]
-    check_signoff_doc_index(approvals$doc_index,
-                            phase_labels, signoff_labels,
-                            phase = PHASE, signoff = PHASE + 1)
-
-    # extract statuses
-    status_long <- find_status(approvals$text, str_glue("({STATUSES()})[\\s\\w-]*Review by CENTER"),
-                               phase = PHASE, task = "Long-form Unit Presentation", signoff = "CENTER")
-
-    rbind(status_short, status_long)
-}
-
-#' Check That Doc Index for Sign-Off is in Range
-#'
-#' @param doc_index index for the paragraph with the signoff
-#' @param phase_labels a data.frame, subset of the output from \link[officer]{docx_summary} that are the paragraphs corresponding to the labels of the start of each phase
-#' @param signoff_labels a data.frame, subset of the output from \link[officer]{docx_summary} that are the paragraphs corresponding to the "Sign offs" headings
-#' @param phase which phase to check
-#' @param signoff which signoff to check
-#'
-#' @return NULL
-#' @export
-check_signoff_doc_index <- function(doc_index,
-                                    phase_labels, signoff_labels,
-                                    phase, signoff = phase)
-{
-    stopifnot(
-        doc_index > phase_labels$doc_index[phase],
-        doc_index  < phase_labels$doc_index[phase + 1],
-        doc_index > signoff_labels$doc_index[signoff],
-        doc_index <= signoff_labels$doc_index[signoff] + 3)
-}
-
-
-#' Create a status row
-#'
-#' @param string passed to \link[stringr]{str_extract}
-#' @param pattern passed to \link[stringr]{str_extract}
-#' @param phase number of the phase in the new status row
-#' @param task name of the task in the new status row
-#' @param signoff name of the signoff in the new status row
+#' @param content a data.frame (output from \link[officer]{docx_summary})
 #'
 #' @return a data.frame
 #' @export
-find_status <- function(string, pattern, phase, task, signoff)
+find_statuses <- function(content)
 {
-    status <- stringr::str_extract(string, pattern, group = 1)
-    c(phase = phase, task = task, signoff = signoff, status = status)
+    utils::data("parsing_dat")
+    parsing_dat$pattern <- stringr::str_glue("({STATUSES()})\\s*{parsing_dat$label}")
+
+    ## find phase label and signoff labels
+    phase_labels <- find_roadmap_phases(content)
+    signoff_labels <- find_roadmap_signoffs(content)
+
+    ## setup loop
+    statuses_df <- data.frame(phase = numeric(), mini_unit = numeric(),
+                              task = character(), signoff = character(),
+                              status = character())
+    prev_phase <- 0
+    curr_mini_unit <- NA
+
+    ## for each signoff
+    #    find next table after "sign off" label
+    #    identify phase
+    #    identify parse group
+    #    perform parsing of statuses
+    #   identify appopriate parsing
+    for (curr_signoff_doc_index in signoff_labels$doc_index)
+    {
+        # find next table after "sign off" label
+        curr_statuses <- subset(content,
+                                content_type %in% "table cell" &
+                                    doc_index > curr_signoff_doc_index &
+                                    doc_index < curr_signoff_doc_index + 3)[1, ]
+
+        # identify phase
+        curr_phase <- max(which(curr_statuses$doc_index > phase_labels$doc_index))
+        stopifnot(curr_statuses$doc_index < phase_labels$doc_index[curr_phase + 1])
+
+        # identify parse group
+        if (curr_phase == 4)
+        {
+            parse_grp_idx <- 1
+            if (is.na(curr_mini_unit))
+            {
+                curr_mini_unit <- 1
+            } else {
+                curr_mini_unit <- curr_mini_unit + 1
+            }
+        } else if (curr_phase != prev_phase) {
+            parse_grp_idx <- 1
+            curr_mini_unit <- NA
+        } else if (curr_phase == prev_phase) {
+            parse_grp_idx <- parse_grp_idx + 1
+            curr_mini_unit <- NA
+        }
+        prev_phase <- curr_phase
+
+        # perform parsing of statuses
+        status_format <- subset(parsing_dat, phase == curr_phase & parse_group == parse_grp_idx)
+        result <- parse_statuses(curr_statuses$text, status_format)
+        result$phase <- curr_phase
+        result$mini_unit <- curr_mini_unit
+        statuses_df <- rbind(statuses_df, result)
+    }
+
+    statuses_df
+}
+
+#' Extract Statuses from a Given String
+#'
+#' @param string the text string containing the statuses to be extracted
+#' @param status_format the data.frame containing the information about statuses: columns `task` and `signoff` to pass to the output, and a column `pattern` containing the regex pattern to extract the status
+#'
+#' @return a data.frame with the `task` and `signoff` columns from the `status_format` param, and `status` containing the extracted status
+#' @export
+parse_statuses <- function(string, status_format)
+{
+    data.frame(task = status_format$task,
+               signoff = status_format$signoff,
+               status = stringr::str_extract(string, status_format$pattern, group = 1))
 }
 
 #' Regex Pattern for Allowed Statuses
