@@ -22,13 +22,13 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/STATUSES.html</loc>
+  </url>
+  <url>
     <loc>/reference/URL_db_units.html</loc>
   </url>
   <url>
     <loc>/reference/access_log.html</loc>
-  </url>
-  <url>
-    <loc>/reference/add_status.html</loc>
   </url>
   <url>
     <loc>/reference/check_roadmap_files.html</loc>
@@ -49,10 +49,22 @@
     <loc>/reference/find_roadmap_signoffs.html</loc>
   </url>
   <url>
+    <loc>/reference/find_statuses.html</loc>
+  </url>
+  <url>
+    <loc>/reference/gdrive.automation-package.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/log_action.html</loc>
+  </url>
+  <url>
+    <loc>/reference/parse_statuses.html</loc>
+  </url>
+  <url>
+    <loc>/reference/parsing_dat.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
