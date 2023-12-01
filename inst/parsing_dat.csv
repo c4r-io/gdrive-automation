@@ -18,6 +18,6 @@ phase,parse_group,task,signoff,label
 5,2,Video,METER,Video Review by METER
 5,2,Long-form Unit,CENTER,Long-form Unit Review by CENTER
 5,2,Long-form Unit,METER,Long-form Unit Review by METER
-6,1,Phase 6,METER,Review by METER
-6,1,Phase 6,CENTER,Review by CENTER
-6,1,Phase 6,SC,Review by SC
+6,1,C4R Internal Review,METER,Review by METER
+6,1,C4R Internal Review,CENTER,Review by CENTER
+6,1,C4R Internal Review,SC,Review by SC

@@ -4,7 +4,7 @@
 \alias{log_action}
 \title{Record an action in the log}
 \usage{
-log_action(action = "", note = "", type = "INFO")
+log_action(action = "", note = "", type = "INFO", loop_num = NA)
 }
 \arguments{
 \item{action}{Description of the change}
@@ -13,6 +13,8 @@ log_action(action = "", note = "", type = "INFO")
 of changes)}
 
 \item{type}{Type of message ("INFO", "ERROR", "ACTION TAKEN", "ACTION NEEDED")}
+
+\item{loop_num}{Number indicating which processing loop the log message is associated with}
 }
 \description{
 All changes to files in the C4R googledrive that are performed by this
