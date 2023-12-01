@@ -4,13 +4,15 @@
 \alias{log_action}
 \title{Record an action in the log}
 \usage{
-log_action(action = "", note = "")
+log_action(action = "", note = "", type = "INFO")
 }
 \arguments{
 \item{action}{Description of the change}
 
 \item{note}{Any relevant notes (e.g. if the change is part of a larger set
 of changes)}
+
+\item{type}{Type of message ("INFO", "ERROR", "ACTION TAKEN", "ACTION NEEDED")}
 }
 \description{
 All changes to files in the C4R googledrive that are performed by this

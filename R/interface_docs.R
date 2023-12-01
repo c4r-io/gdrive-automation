@@ -16,15 +16,16 @@ get_roadmap_statuses <- function(roadmap_id, dl_path = tempfile(fileext = ".docx
 
     # find title
     title <- extract_roadmap_title(content)
+    miniunit_names <- extract_roadmap_miniunits(content)
 
     ## find statuses
     statuses <- extract_roadmap_statuses(content) %>%
-        format_statuses(title = title)
+        format_statuses(title = title, miniunit_names = miniunit_names)
 }
 
 #' Extract the title of a roadmap
 #'
-#' @param content  a data.frame (output from \link[officer]{docx_summary})
+#' @param content a data.frame (output from \link[officer]{docx_summary})
 #'
 #' @return character
 #' @export
@@ -34,6 +35,22 @@ extract_roadmap_title <- function(content)
                                 grepl("title", text))
     subset(content, content_type %in% "table cell" &
                              doc_index > min(title_heading$doc_index))[1, "text"]
+}
+
+#' Extract the mini-unit titles of a roadmap
+#'
+#' @param content a data.frame (output from \link[officer]{docx_summary})
+#'
+#' @return character vector (of length 8)
+#' @export
+extract_roadmap_miniunits <- function(content)
+{
+    table_cells <- subset(content, content_type %in% "table cell")
+    tt <- table(table_cells$doc_index)
+    miniunit_doc_index <- as.numeric(names(tt)[tt == max(tt)])
+    miniunit_table <- subset(table_cells, doc_index == miniunit_doc_index)
+    stopifnot(NROW(miniunit_table) == 45)
+    miniunit_table$text[2:9]
 }
 
 #' Extract the labels for each Phase
@@ -147,11 +164,12 @@ extract_roadmap_statuses <- function(content)
 #' Cleanup and Format Statuses
 #'
 #' @param statuses a data.frame, usually the output of \link{extract_roadmap_statuses}
+#' @param miniunit_names a character vector, usually the output of \link{extract_roadmap_miniunits}
 #' @param title name of the unit
 #'
 #' @return a data.frame
 #' @export
-format_statuses <- function(statuses, title)
+format_statuses <- function(statuses, title, miniunit_names)
 {
     stopifnot(!anyNA(statuses$status))
 
@@ -182,7 +200,9 @@ format_statuses <- function(statuses, title)
     # reorder and format statuses
     statuses %>%
         dplyr::arrange(phase, mini_unit) %>%
-        dplyr::mutate(unit = title, phase = phase_names[phase]) %>%
+        dplyr::mutate(unit = title,
+                      phase = phase_names[phase],
+                      mini_unit = miniunit_names[mini_unit]) %>%
         dplyr::select(Unit = unit,
                       `Mini-Unit` = mini_unit,
                       Phase = phase,

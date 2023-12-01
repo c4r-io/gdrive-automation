@@ -6,15 +6,17 @@
 #' @param action Description of the change
 #' @param note Any relevant notes (e.g. if the change is part of a larger set
 #'   of changes)
+#' @param type Type of message ("INFO", "ERROR", "ACTION TAKEN", "ACTION NEEDED")
 #'
 #' @return NULL
 #' @export
-log_action <- function(action = "", note = "")
+log_action <- function(action = "", note = "", type = "INFO")
 {
     my_log <- access_log()
     log_row <- data.frame(datetime = format(Sys.time(), "%Y-%M-%d %X %Z"),
                           action = action,
-                          note = note)
+                          note = note,
+                          type = type)
     googlesheets4::sheet_append(my_log, log_row)
     invisible()
 }
