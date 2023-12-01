@@ -1,50 +1,49 @@
-
-#' Verify roadmap files against central list of
+#' Download a roadmap and extract statuses
 #'
-#' @param db_units the tibble with the central DB of all units
-#' @param roadmap_files the dribble with all files matching "Unit Roadmap" in the filename
+#' @param roadmap_id the drv_id of a roadmap file
+#' @param dl_path path to where to download the roadmap file
 #'
-#' @return NULL
+#' @return a data.frame of statuses, mirroring the structure of \link{read_unit_tasks}
 #' @export
-check_roadmap_files <- function(db_units = read_db_units(),
-                                roadmap_files = find_roadmap_files())
+get_roadmap_statuses <- function(roadmap_id, dl_path = tempfile(fileext = ".docx"))
 {
-    db_ids <- googledrive::as_id(db_units$`Roadmap URL`)
-    roadmap_ids <- roadmap_files$id
+    ## download roadmap as docx
+    googledrive::drive_download(roadmap_id, dl_path)
 
-    new_roadmaps <- setdiff(roadmap_ids, db_ids)
-    unlisted_roadmaps <- roadmap_files[roadmap_files$id %in% new_roadmaps,]
-    if (length(stats::na.omit(unlisted_roadmaps)) > 0)
-    {
-        warning(paste(unlisted_roadmaps, collapse = "\n"))
-    }
+    ## read in docx
+    roadmap <- officer::read_docx(dl_path)
+    content <- officer::docx_summary(roadmap)
 
-    missing_roadmaps <- setdiff(db_ids, roadmap_ids)
-    if (length(stats::na.omit(missing_roadmaps)) > 0)
-    {
-        warning(paste(missing_roadmaps, collapse = "\n"))
-    }
-    invisible()
+    # find title
+    title <- extract_roadmap_title(content)
+
+    ## find statuses
+    statuses <- extract_roadmap_statuses(content) %>%
+        format_statuses(title = title)
 }
 
-#' Find all the Unit Roadmap files in the Shared Drive
+#' Extract the title of a roadmap
 #'
-#' @return A dribble
+#' @param content
+#'
+#' @return character
 #' @export
-find_roadmap_files <- function()
+extract_roadmap_title <- function(content)
 {
-    c4r_drive <- "(C4R) Community for Rigor"
-    googledrive::drive_find("Unit Roadmap", shared_drive = c4r_drive)
+    title_heading <- subset(content, style_name %in% "heading 3" &
+                                grepl("title", text))
+    subset(content, content_type %in% "table cell" &
+                             doc_index > min(title_heading$doc_index))[1, "text"]
 }
 
-#' Find the labels for each Phase
+#' Extract the labels for each Phase
 #'
 #' @param content a data.frame (output from \link[officer]{docx_summary})
 #' @param NUM_PHASES number of phases to expect
 #'
 #' @return a data.frame
 #' @export
-find_roadmap_phases <- function(content, NUM_PHASES = 7)
+extract_roadmap_phases <- function(content, NUM_PHASES = 7)
 {
     phase_pattern <- "Phase\\s*(\\d+)"
     headings_1 <- subset(content,
@@ -60,13 +59,13 @@ find_roadmap_phases <- function(content, NUM_PHASES = 7)
     phase_labels
 }
 
-#' Find the signoff sections
+#' Extract the signoff sections
 #'
 #' @param content a data.frame (output from \link[officer]{docx_summary})
 #'
 #' @return a data.frame
 #' @export
-find_roadmap_signoffs <- function(content)
+extract_roadmap_signoffs <- function(content)
 {
     headings_23 <- subset(content,
                           content_type %in% "paragraph" &
@@ -75,20 +74,20 @@ find_roadmap_signoffs <- function(content)
     headings_23[idx, ]
 }
 
-#' Find Statuses
+#' Extract roadmap statuses
 #'
 #' @param content a data.frame (output from \link[officer]{docx_summary})
 #'
 #' @return a data.frame
 #' @export
-find_statuses <- function(content)
+extract_roadmap_statuses <- function(content)
 {
     utils::data("parsing_dat")
     parsing_dat$pattern <- stringr::str_glue("({STATUSES()})\\s*{parsing_dat$label}")
 
     ## find phase label and signoff labels
-    phase_labels <- find_roadmap_phases(content)
-    signoff_labels <- find_roadmap_signoffs(content)
+    phase_labels <- extract_roadmap_phases(content)
+    signoff_labels <- extract_roadmap_signoffs(content)
 
     ## setup loop
     statuses_df <- data.frame(phase = numeric(), mini_unit = numeric(),
@@ -143,6 +142,52 @@ find_statuses <- function(content)
     }
 
     statuses_df
+}
+
+#' Cleanup and Format Statuses
+#'
+#' @param statuses a data.frame, usually the output of \link{find_statuses}
+#'
+#' @return a data.frame
+#' @export
+format_statuses <- function(statuses, title)
+{
+    stopifnot(!anyNA(statuses$status))
+
+    # make sure there are 8 mini-units in phase 4
+    num_mini_units_phase_4 <- subset(statuses, phase == 4)[, "mini_unit"] %>%
+        unique() %>%
+        length()
+
+    if (num_mini_units_phase_4 < 8)
+    {
+        num_missing_mini_units <- 8 - num_mini_units_phase_4
+        d <- subset(statuses, phase == 4 & mini_unit == 1)
+        to_add <- do.call("rbind", replicate(num_missing_mini_units, d, simplify = FALSE))
+        to_add$mini_unit <- rep(seq(to = 8, length.out = num_missing_mini_units), each = NROW(d))
+
+        statuses <- rbind(statuses, to_add)
+    }
+
+    # text names for phases
+    phase_names <- c("1. Unit Ideation",
+                     "2. Unit Outline",
+                     "3. Unit Presentations",
+                     "4. Activity Design and Prototyping",
+                     "5. Unit Assembly",
+                     "6. Internal Testing",
+                     "7. Polish, Review, Testing")
+
+    # reorder and format statuses
+    statuses %>%
+        dplyr::arrange(phase, mini_unit) %>%
+        dplyr::mutate(unit = title, phase = phase_names[phase]) %>%
+        dplyr::select(Unit = unit,
+                      `Mini-Unit` = mini_unit,
+                      Phase = phase,
+                      Task = task,
+                      `Signoff by` = signoff,
+                      Status = status)
 }
 
 #' Extract Statuses from a Given String
