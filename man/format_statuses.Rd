@@ -7,7 +7,9 @@
 format_statuses(statuses, title)
 }
 \arguments{
-\item{statuses}{a data.frame, usually the output of \link{find_statuses}}
+\item{statuses}{a data.frame, usually the output of \link{extract_roadmap_statuses}}
+
+\item{title}{name of the unit}
 }
 \value{
 a data.frame

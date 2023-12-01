@@ -25,6 +25,15 @@ if (run)
 
     statuses <- get_roadmap_statuses(roadmap_id)
 
+    all.equal(unit_tasks, statuses, check.attributes = FALSE)
+
+    # get statuses from all roadmaps
+    #   log errors
+    # compare against stored data
+    #   log any changes
+    # store new data (list with roadmap_id column, and statuses column)
+
+
 
 }
 

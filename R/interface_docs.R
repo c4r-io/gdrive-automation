@@ -24,7 +24,7 @@ get_roadmap_statuses <- function(roadmap_id, dl_path = tempfile(fileext = ".docx
 
 #' Extract the title of a roadmap
 #'
-#' @param content
+#' @param content  a data.frame (output from \link[officer]{docx_summary})
 #'
 #' @return character
 #' @export
@@ -146,7 +146,8 @@ extract_roadmap_statuses <- function(content)
 
 #' Cleanup and Format Statuses
 #'
-#' @param statuses a data.frame, usually the output of \link{find_statuses}
+#' @param statuses a data.frame, usually the output of \link{extract_roadmap_statuses}
+#' @param title name of the unit
 #'
 #' @return a data.frame
 #' @export

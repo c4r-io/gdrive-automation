@@ -7,7 +7,7 @@
 extract_roadmap_title(content)
 }
 \arguments{
-\item{content}{}
+\item{content}{a data.frame (output from \link[officer]{docx_summary})}
 }
 \value{
 character
