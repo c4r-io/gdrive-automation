@@ -31,7 +31,7 @@
     <loc>/reference/access_log.html</loc>
   </url>
   <url>
-    <loc>/reference/check_roadmap_files.html</loc>
+    <loc>/reference/check_files_roadmap.html</loc>
   </url>
   <url>
     <loc>/reference/decrypt_gdrive_token.html</loc>
@@ -40,19 +40,28 @@
     <loc>/reference/do_auth.html</loc>
   </url>
   <url>
-    <loc>/reference/find_roadmap_files.html</loc>
+    <loc>/reference/extract_roadmap_phases.html</loc>
   </url>
   <url>
-    <loc>/reference/find_roadmap_phases.html</loc>
+    <loc>/reference/extract_roadmap_signoffs.html</loc>
   </url>
   <url>
-    <loc>/reference/find_roadmap_signoffs.html</loc>
+    <loc>/reference/extract_roadmap_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/find_statuses.html</loc>
+    <loc>/reference/extract_roadmap_title.html</loc>
+  </url>
+  <url>
+    <loc>/reference/find_files_roadmaps.html</loc>
+  </url>
+  <url>
+    <loc>/reference/format_statuses.html</loc>
   </url>
   <url>
     <loc>/reference/gdrive.automation-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_roadmap_statuses.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
