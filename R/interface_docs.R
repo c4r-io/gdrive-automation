@@ -3,9 +3,9 @@
 #' @param roadmap_id the drv_id of a roadmap file
 #' @param dl_path path to where to download the roadmap file
 #'
-#' @return a data.frame of statuses, mirroring the structure of \link{read_unit_tasks}
+#' @return a data.frame of statuses, mirroring the structure of \link{read_tracker_statuses}
 #' @export
-get_roadmap_statuses <- function(roadmap_id, dl_path = tempfile(fileext = ".docx"))
+read_roadmap_statuses <- function(roadmap_id, dl_path = tempfile(fileext = ".docx"))
 {
     ## download roadmap as docx
     googledrive::drive_download(roadmap_id, dl_path)
@@ -31,10 +31,11 @@ get_roadmap_statuses <- function(roadmap_id, dl_path = tempfile(fileext = ".docx
 #' @export
 extract_roadmap_title <- function(content)
 {
-    title_heading <- subset(content, style_name %in% "heading 3" &
-                                grepl("title", text))
-    subset(content, content_type %in% "table cell" &
-                             doc_index > min(title_heading$doc_index))[1, "text"]
+    title_idx <- which(content$style_name %in% "heading 3" &
+        grepl("title", content$text))
+    title_cell_idx <- content$content_type %in% "table cell" &
+        content$doc_index > min(content$doc_index[title_idx])
+    content[title_cell_idx, "text"][1]
 }
 
 #' Extract the mini-unit titles of a roadmap

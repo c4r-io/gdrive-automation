@@ -21,12 +21,12 @@ read_db_units <- function(id = URL_db_units())
 
 #' Read the tasks for a single unit
 #'
-#' @param id The URL for the googlesheet containing tasks for a single unit
+#' @param url The URL for the googlesheet containing tasks for a single unit
 #' @param sheet The name of the sheet to specify which unit, defaults to `"unit 1"`
 #'
 #' @return A tibble
 #' @export
-read_unit_tasks <- function(url, sheet = "unit 1")
+read_tracker_statuses <- function(url, sheet = "unit 1")
 {
     googlesheets4::read_sheet(url, sheet, skip = 1)
 }

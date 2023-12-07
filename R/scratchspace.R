@@ -15,17 +15,17 @@ if (run)
     idx <- 1
 
     # get tasks for one unit
-    test_unit_sheet <- db_units$`Task Sheet Name`[idx]
-    test_unit_url <- db_units$`Tasks URL`[idx]
-    unit_tasks <- read_unit_tasks(test_unit_url, test_unit_sheet)
+    tracker_url <- db_units$`Tracker URL`[idx]
+    tracker_sheet <- db_units$`Tracker Sheet Name`[idx]
+    tracker_dat <- read_tracker_statuses(tracker_url, tracker_sheet)
 
     # get roadmap for one unit
     roadmap_url <- db_units$`Roadmap URL`[idx]
     roadmap_id <- googledrive::as_id(roadmap_url)
 
-    statuses <- get_roadmap_statuses(roadmap_id)
+    roadmap_dat <- read_roadmap_statuses(roadmap_id)
 
-    all.equal(unit_tasks, statuses, check.attributes = FALSE)
+    all.equal(tracker_dat, roadmap_dat, check.attributes = FALSE)
 
     # get statuses from all roadmaps
     #   log errors
@@ -49,8 +49,8 @@ if (run)
         db_units <- read_db_units()
         roadmap_urls <- db_units$`Roadmap URL`
         roadmap_ids <- googledrive::as_id(roadmap_urls)
-        task_urls <- db_units$`Tasks URL`
-        task_sheets <- db_units$`Task Sheet Name`
+        tracker_urls <- db_units$`Tracker URL`
+        tracker_sheets <- db_units$`Tracker Sheet Name`
     }, error = function(e) {
         log_action(e$message, type = "ERROR", loop_num = loop_num)
     })
@@ -60,12 +60,12 @@ if (run)
 
         # get statuses from unit roadmap
         roadmap_id <- roadmap_ids[idx]
-        roadmap_dat <- get_roadmap_statuses(roadmap_id)
+        roadmap_dat <- read_roadmap_statuses(roadmap_id)
 
         # get statuses from task spreadsheet
-        tracker_url <- task_urls[idx]
-        tracker_sheet <- task_sheets[idx]
-        tracker_dat <- read_unit_tasks(tracker_url, tracker_sheet)
+        tracker_url <- tracker_urls[idx]
+        tracker_sheet <- tracker_sheets[idx]
+        tracker_dat <- read_tracker_statuses(tracker_url, tracker_sheet)
 
         # check for same number of rows
         stopifnot(NROW(roadmap_dat) == NROW(tracker_dat))
@@ -95,7 +95,19 @@ if (run)
         }
 
         # check for updated statuses
-
+        if (!identical(roadmap_dat$Status,
+                       tracker_dat$Status))
+        {
+            # go through each status
+            # if roadmap is submitted and tracker is not started
+            # take action for submission
+            # if roadmap is approved and tracker is not approved
+            # log action needed (check if tracker needs updating)
+            # if tracker is approved and roadmap is not approved
+            # log action needed (update roadmap)
+            # if any other discrepancy
+            # log action needed
+        }
 
     }, error = function(e) {
         log_action(e$message, type = "ERROR", loop_num = loop_num)
