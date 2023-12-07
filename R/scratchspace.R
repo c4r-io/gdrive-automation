@@ -49,14 +49,52 @@ if (run)
         db_units <- read_db_units()
         roadmap_urls <- db_units$`Roadmap URL`
         roadmap_ids <- googledrive::as_id(roadmap_urls)
+        task_urls <- db_units$`Tasks URL`
+        task_sheets <- db_units$`Task Sheet Name`
     }, error = function(e) {
         log_action(e$message, type = "ERROR", loop_num = loop_num)
     })
 
     tryCatch({
         idx <- 1
+
+        # get statuses from unit roadmap
         roadmap_id <- roadmap_ids[idx]
-        statuses <- get_roadmap_statuses(roadmap_id)
+        roadmap_dat <- get_roadmap_statuses(roadmap_id)
+
+        # get statuses from task spreadsheet
+        tracker_url <- task_urls[idx]
+        tracker_sheet <- task_sheets[idx]
+        tracker_dat <- read_unit_tasks(tracker_url, tracker_sheet)
+
+        # check for same number of rows
+        stopifnot(NROW(roadmap_dat) == NROW(tracker_dat))
+
+        # check for updated unit title
+        if (roadmap_dat$Unit[1] != tracker_dat$Unit[1])
+        {
+            log_action(paste0("Updating title to '", roadmap_dat$Unit[1], "'"),
+                       paste0("URL = ", tracker_url),
+                       "ACTION TAKEN",
+                       loop_num = loop_num)
+            tracker_dat$Unit <- roadmap_dat$Unit[1]
+        }
+
+        # check for updated mini-unit names
+        mini_unit_idx <- 7:38
+        if (!identical(roadmap_dat$`Mini-Unit`[mini_unit_idx],
+                       tracker_dat$`Mini-Unit`[mini_unit_idx]))
+        {
+            log_action(paste0("Updating mini-unit titles to {",
+                              paste0(unique(roadmap_dat$`Mini-Unit`[mini_unit_idx]), collapse = ", "), "}"),
+                       paste0("URL = ", tracker_url),
+                       "ACTION TAKEN",
+                       loop_num = loop_num)
+            tracker_dat$`Mini-Unit`[mini_unit_idx] <-
+                roadmap_dat$`Mini-Unit`[mini_unit_idx]
+        }
+
+        # check for updated statuses
 
 
     }, error = function(e) {

@@ -201,14 +201,14 @@ format_statuses <- function(statuses, title, miniunit_names)
     statuses %>%
         dplyr::arrange(phase, mini_unit) %>%
         dplyr::mutate(unit = title,
-                      phase = phase_names[phase],
-                      mini_unit = miniunit_names[mini_unit]) %>%
-        dplyr::select(Unit = unit,
-                      `Mini-Unit` = mini_unit,
-                      Phase = phase,
-                      Task = task,
-                      `Signoff by` = signoff,
-                      Status = status)
+                      phase = phase_names[.data$phase],
+                      mini_unit = miniunit_names[.data$mini_unit]) %>%
+        dplyr::select(Unit = .data$unit,
+                      `Mini-Unit` = .data$mini_unit,
+                      Phase = .data$phase,
+                      Task = .data$task,
+                      `Signoff by` = .data$signoff,
+                      Status = .data$status)
 }
 
 #' Extract Statuses from a Given String

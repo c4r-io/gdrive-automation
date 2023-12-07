@@ -16,6 +16,7 @@ Imports:
     googlesheets4,
     magrittr,
     officer,
+    rlang,
     stringr
 Suggests: 
     knitr,

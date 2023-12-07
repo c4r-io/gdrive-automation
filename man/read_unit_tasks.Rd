@@ -4,12 +4,12 @@
 \alias{read_unit_tasks}
 \title{Read the tasks for a single unit}
 \usage{
-read_unit_tasks(id, sheet = "unit 1")
+read_unit_tasks(url, sheet = "unit 1")
 }
 \arguments{
-\item{id}{The URL for the googlesheet containing tasks for a single unit}
-
 \item{sheet}{The name of the sheet to specify which unit, defaults to \code{"unit 1"}}
+
+\item{id}{The URL for the googlesheet containing tasks for a single unit}
 }
 \value{
 A tibble

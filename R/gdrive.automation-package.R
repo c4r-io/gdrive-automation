@@ -19,3 +19,5 @@ NULL
 #'   \item{label}{string that identifies the status}
 #' }
 "parsing_dat"
+
+utils::globalVariables(".data")
