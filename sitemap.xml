@@ -67,9 +67,6 @@
     <loc>/reference/get_last_loop_num.html</loc>
   </url>
   <url>
-    <loc>/reference/get_roadmap_statuses.html</loc>
-  </url>
-  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
@@ -88,6 +85,9 @@
     <loc>/reference/read_db_units.html</loc>
   </url>
   <url>
-    <loc>/reference/read_unit_tasks.html</loc>
+    <loc>/reference/read_roadmap_statuses.html</loc>
+  </url>
+  <url>
+    <loc>/reference/read_tracker_statuses.html</loc>
   </url>
 </urlset>
