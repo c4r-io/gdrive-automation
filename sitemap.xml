@@ -31,7 +31,13 @@
     <loc>/reference/access_log.html</loc>
   </url>
   <url>
+    <loc>/reference/as_statuses.html</loc>
+  </url>
+  <url>
     <loc>/reference/check_files_roadmap.html</loc>
+  </url>
+  <url>
+    <loc>/reference/check_statuses.html</loc>
   </url>
   <url>
     <loc>/reference/decrypt_gdrive_token.html</loc>
@@ -70,7 +76,16 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
+    <loc>/reference/is.statuses.html</loc>
+  </url>
+  <url>
     <loc>/reference/log_action.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mini_units-set.html</loc>
+  </url>
+  <url>
+    <loc>/reference/mini_units.html</loc>
   </url>
   <url>
     <loc>/reference/parse_statuses.html</loc>
@@ -89,5 +104,11 @@
   </url>
   <url>
     <loc>/reference/read_tracker_statuses.html</loc>
+  </url>
+  <url>
+    <loc>/reference/title-set.html</loc>
+  </url>
+  <url>
+    <loc>/reference/title.html</loc>
   </url>
 </urlset>
