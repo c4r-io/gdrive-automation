@@ -11,29 +11,6 @@ if (run)
     roadmap_files <- find_files_roadmaps()
     check_files_roadmap(db_units, roadmap_files)
 
-    # test unit
-    idx <- 1
-
-    # get tasks for one unit
-    tracker_url <- db_units$`Tracker URL`[idx]
-    tracker_sheet <- db_units$`Tracker Sheet Name`[idx]
-    tracker_dat <- read_tracker_statuses(tracker_url, tracker_sheet)
-
-    # get roadmap for one unit
-    roadmap_url <- db_units$`Roadmap URL`[idx]
-    roadmap_id <- googledrive::as_id(roadmap_url)
-
-    roadmap_dat <- read_roadmap_statuses(roadmap_id)
-
-    all.equal(tracker_dat, roadmap_dat, check.attributes = FALSE)
-
-    # get statuses from all roadmaps
-    #   log errors
-    # compare against stored data
-    #   log any changes
-    # store new data (list with roadmap_id column, and statuses column)
-
-
 
 }
 
@@ -85,8 +62,8 @@ if (run)
         if (!identical(roadmap_dat$`Mini-Unit`[mini_unit_idx],
                        tracker_dat$`Mini-Unit`[mini_unit_idx]))
         {
-            log_action(paste0("Updating mini-unit titles to {",
-                              paste0(unique(roadmap_dat$`Mini-Unit`[mini_unit_idx]), collapse = ", "), "}"),
+            log_action(paste0("Updating mini-unit titles to {'",
+                              paste0(unique(roadmap_dat$`Mini-Unit`[mini_unit_idx]), collapse = "', '"), "'}"),
                        paste0("URL = ", tracker_url),
                        "ACTION TAKEN",
                        loop_num = loop_num)

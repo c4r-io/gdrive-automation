@@ -18,7 +18,7 @@ log_action <- function(action = "", note = "", type = "INFO", loop_num = NA)
                           action = action,
                           note = note,
                           type = type,
-                          loop_num = NA)
+                          loop_num = loop_num)
     googlesheets4::sheet_append(my_log, log_row)
     invisible()
 }
