@@ -3,8 +3,6 @@
 export("%>%")
 export("mini_units<-")
 export("title<-")
-export(STATUSES)
-export(URL_db_units)
 export(access_log)
 export(as_statuses)
 export(check_files_roadmap)

@@ -101,7 +101,7 @@ extract_roadmap_signoffs <- function(content)
 extract_roadmap_statuses <- function(content)
 {
     utils::data("parsing_dat")
-    parsing_dat$pattern <- stringr::str_glue("({STATUSES()})\\s*{parsing_dat$label}")
+    parsing_dat$pattern <- stringr::str_glue("({gdrv_auto_env$status_pattern})\\s*{parsing_dat$label}")
 
     ## find phase label and signoff labels
     phase_labels <- extract_roadmap_phases(content)
@@ -189,20 +189,11 @@ format_statuses <- function(statuses, title, miniunit_names)
         statuses <- rbind(statuses, to_add)
     }
 
-    # text names for phases
-    phase_names <- c("1. Unit Ideation",
-                     "2. Unit Outline",
-                     "3. Unit Presentations",
-                     "4. Activity Design and Prototyping",
-                     "5. Unit Assembly",
-                     "6. Internal Testing",
-                     "7. Polish, Review, Testing")
-
     # reorder and format statuses
     statuses %>%
         dplyr::arrange(phase, mini_unit) %>%
         dplyr::mutate(unit = title,
-                      phase = phase_names[.data$phase],
+                      phase = gdrv_auto_env$phase_names[.data$phase],
                       mini_unit = miniunit_names[.data$mini_unit]) %>%
         dplyr::select(Unit = .data$unit,
                       `Mini-Unit` = .data$mini_unit,
@@ -224,13 +215,4 @@ parse_statuses <- function(string, status_format)
     data.frame(task = status_format$task,
                signoff = status_format$signoff,
                status = stringr::str_extract(string, status_format$pattern, group = 1))
-}
-
-#' Regex Pattern for Allowed Statuses
-#'
-#' @return A character string
-#' @export
-STATUSES <- function()
-{
-    return("Submitted|Under review|Approved|Not started")
 }

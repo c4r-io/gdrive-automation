@@ -1,19 +1,10 @@
-#' Default URL for the googlesheet with the central DB of all units
-#'
-#' @return string with the URL for the
-#' @export
-URL_db_units <- function()
-{
-    "https://docs.google.com/spreadsheets/d/1cdEwmaUIXPvEIdVOow8tQCPjsz7hseO4h7aaS8ylImA/edit#gid=472058338"
-}
-
 #' Read the database of links for all units
 #'
 #' @param id The URL for the googlesheet with the central DB of all units
 #'
 #' @return A tibble
 #' @export
-read_db_units <- function(id = URL_db_units())
+read_db_units <- function(id = gdrv_auto_env$URL_db_units)
 {
     googlesheets4::read_sheet(id, sheet = "Unit Info", skip = 1)
 }

@@ -11,8 +11,18 @@
 #'
 #' @return NULL
 #' @export
-log_action <- function(action = "", note = "", type = "INFO", loop_num = NA)
+log_action <- function(action = "", note = "", type = "INFO", loop_num = NULL)
 {
+    # set loop_num if none provided
+    if (is.null(loop_num))
+    {
+        loop_num <- NA
+        if (!is.null(gdrv_auto_env$loop_num))
+        {
+            loop_num <- gdrv_auto_env$loop_num
+        }
+    }
+
     my_log <- access_log()
     log_row <- data.frame(datetime = format(Sys.time(), "%Y-%M-%d %X %Z"),
                           action = action,

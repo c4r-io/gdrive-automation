@@ -17,8 +17,8 @@ if (run)
 if (run)
 {
     # start of processing loop
-    loop_num <- get_last_loop_num() + 1
-    log_action("Starting Processing Loop", loop_num = loop_num)
+    gdrv_auto_env$loop_num <- get_last_loop_num() + 1
+    log_action("Starting Processing Loop")
 
     # access roadmap docs from db
     tryCatch({
@@ -29,7 +29,7 @@ if (run)
         tracker_urls <- db_units$`Tracker URL`
         tracker_sheets <- db_units$`Tracker Sheet Name`
     }, error = function(e) {
-        log_action(e$message, type = "ERROR", loop_num = loop_num)
+        log_action(e$message, type = "ERROR")
     })
 
     tryCatch({
@@ -52,8 +52,7 @@ if (run)
         {
             log_action(paste0("Updating title to '", roadmap_dat$Unit[1], "'"),
                        paste0("URL = ", tracker_url),
-                       "ACTION TAKEN",
-                       loop_num = loop_num)
+                       "ACTION TAKEN")
             tracker_dat$Unit <- roadmap_dat$Unit[1]
         }
 
@@ -65,8 +64,7 @@ if (run)
             log_action(paste0("Updating mini-unit titles to {'",
                               paste0(unique(roadmap_dat$`Mini-Unit`[mini_unit_idx]), collapse = "', '"), "'}"),
                        paste0("URL = ", tracker_url),
-                       "ACTION TAKEN",
-                       loop_num = loop_num)
+                       "ACTION TAKEN")
             tracker_dat$`Mini-Unit`[mini_unit_idx] <-
                 roadmap_dat$`Mini-Unit`[mini_unit_idx]
         }
@@ -87,10 +85,10 @@ if (run)
         }
 
     }, error = function(e) {
-        log_action(e$message, type = "ERROR", loop_num = loop_num)
+        log_action(e$message, type = "ERROR")
     })
 
 
-    log_action("Ending Processing Loop", note = "Success", loop_num = loop_num)
+    log_action("Ending Processing Loop", note = "Success")
 
 }

@@ -4,7 +4,7 @@
 \alias{log_action}
 \title{Record an action in the log}
 \usage{
-log_action(action = "", note = "", type = "INFO", loop_num = NA)
+log_action(action = "", note = "", type = "INFO", loop_num = NULL)
 }
 \arguments{
 \item{action}{Description of the change}
