@@ -7,7 +7,7 @@
 fix_loop_num(loop_num)
 }
 \arguments{
-\item{loop_num}{}
+\item{loop_num}{number indicating which processing loop is active}
 }
 \value{
 a number, the current loop number

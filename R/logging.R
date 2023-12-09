@@ -89,7 +89,7 @@ merge_todo <- function()
 
 #' Fix the loop_num using the stored value or set to NA
 #'
-#' @param loop_num
+#' @param loop_num number indicating which processing loop is active
 #'
 #' @return a number, the current loop number
 #' @export
