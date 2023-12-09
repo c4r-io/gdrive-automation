@@ -4,12 +4,12 @@
 \alias{notify}
 \title{Send notification}
 \usage{
-notify(to = "CENTER", status_row)
+notify(to = "CENTER", msg)
 }
 \arguments{
 \item{to}{either "CENTER" or "NIH" or a specific METER}
 
-\item{status_row}{a single row of a \code{statuses} object}
+\item{msg}{contents of the notification}
 }
 \description{
 Send notification

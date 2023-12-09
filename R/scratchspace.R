@@ -91,7 +91,7 @@ if (run)
                                note = tracker_URL,
                                "ACTION TAKEN")
                     notify(to = "CENTER",
-                           dat = roadmap_status)
+                           msg = format_status_msg(roadmap_status))
                 }
 
                 # if roadmap is approved and tracker is not approved

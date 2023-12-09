@@ -48,6 +48,45 @@ stage_todo <- function(action = "", url = "", loop_num = NULL)
     invisible()
 }
 
+#' Merge missing todos from staging sheet
+#'
+#' @return NULL
+#' @export
+merge_todo <- function()
+{
+    # look for todo items in staging but not yet in the todo list
+    my_log <- access_log()
+    todo <- googlesheets4::read_sheet(my_log, sheet = "todo")
+    todo_staging <- googlesheets4::read_sheet(my_log, sheet = "todo-staging")
+
+    todo$id <- paste(todo$action, todo$url)
+    todo_staging$id <- paste(todo_staging$action, todo_staging$url)
+
+    missing_todo <- setdiff(todo_staging$id, todo$id)
+    missing_todo_idx <- match(missing_todo, todo_staging$id)
+
+    # copy missing todo items in staging to todo list
+    todo_to_add <- todo_staging[missing_todo_idx, c("datetime", "action", "url", "loop_num")]
+    googlesheets4::sheet_append(my_log, todo_to_add, sheet = "todo")
+
+    # sent notification
+    notify_msg <- paste0(
+        "NEW TODOs ADDED\n",
+        paste0(stringr::str_glue("TODO #{seq_along(missing_todo_idx)}\n",
+                                 "- action = {todo_staging$action[missing_todo_idx]}\n",
+                                 "- url = {todo_staging$url[missing_todo_idx]}\n"),
+               collapse = "\n")
+    )
+    notify(to = "CENTER", msg = notify_msg)
+
+    # clear todo-staging
+    blank_todo <- todo_staging[c(), c("datetime", "action", "url", "loop_num")]
+    googlesheets4::write_sheet(blank_todo, my_log, sheet = "todo-staging")
+
+    invisible()
+}
+
+
 #' Fix the loop_num using the stored value or set to NA
 #'
 #' @param loop_num

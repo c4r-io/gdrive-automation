@@ -19,11 +19,11 @@ format_status_msg <- function(status_row, sep = "\n")
 #' Send notification
 #'
 #' @param to either "CENTER" or "NIH" or a specific METER
-#' @param status_row a single row of a `statuses` object
+#' @param msg contents of the notification
 #'
 #' @return NULL
 #' @export
-notify <- function(to = "CENTER", status_row)
+notify <- function(to = "CENTER", msg)
 {
 
 
