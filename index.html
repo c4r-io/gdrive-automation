@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">gdrive.automation</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +66,9 @@
 <ul>
 <li>check for updates in Unit Roadmaps and process accordingly (send notifications, update files)</li>
 <li>check for updates in the Unit Tracking spreadsheet and process accordingly (send notifications, update files)</li>
+<li>send notifications (via CRM API integraton?)</li>
+<li>log actions</li>
+<li>log todos (actions to be taken by human)</li>
 </ul>
 </div>
 <div class="section level1">
@@ -83,7 +86,7 @@
 <div class="section level2">
 <h2 id="resolving-status-updates">Resolving Status Updates<a class="anchor" aria-label="anchor" href="#resolving-status-updates"></a>
 </h2>
-<p>Both the roadmap and the tracker will contain status indicators for various components / phases of a unit. (The technical limitation here is embedding in the google doc an interactive interface for data that is stored elsewhere.)</p>
+<p>Both the roadmap and the tracker will contain status indicators for various components / phases of a unit. (The technical limitation here is a pulldown item in a google doc cannot be manipulated through the API. Its value can be read by exporting the google doc, however.)</p>
 <p>There are 4 states for the status, which generally progresses from:</p>
 <p>“Not started” -&gt; “Submitted” -&gt; “Under review” -&gt; “Approved”</p>
 <p>The below documentation clarifies how to resolve situations where the status for a particular item is different in the roadmap vs. the tracker.</p>
@@ -96,8 +99,11 @@
 <h3 id="case-1-tracker-is-further-along-than-the-roadmap">Case 1. Tracker is “further along” than the Roadmap<a class="anchor" aria-label="anchor" href="#case-1-tracker-is-further-along-than-the-roadmap"></a>
 </h3>
 <ol style="list-style-type: decimal">
-<li>Update the roadmap to match.</li>
-<li>Log the change.</li>
+<li>Check if a todo already exists for updating the roadmap.</li>
+</ol>
+<!-- --><ol style="list-style-type: decimal">
+<li>if NO, then create a new todo for the update</li>
+<li>if YES, then no action needed</li>
 </ol>
 </div>
 <div class="section level3">
@@ -131,15 +137,14 @@
 <li>Log the change.</li>
 </ol>
 </div>
-<div class="section level4">
-<h4 id="case-2d-anything-else">Case 2d. Anything else.<a class="anchor" aria-label="anchor" href="#case-2d-anything-else"></a>
-</h4>
-<ol style="list-style-type: decimal">
-<li>Revert the roadmap to match the tracker.</li>
-<li>Notify Hao of the discrepancy.</li>
-<li>Log the change.</li>
-</ol>
 </div>
+<div class="section level3">
+<h3 id="case-3-anything-else">Case 3. Anything else.<a class="anchor" aria-label="anchor" href="#case-3-anything-else"></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>Notify Hao of the discrepancy.</li>
+<li>Log the discrepancy.</li>
+</ol>
 </div>
 </div>
 </div>
