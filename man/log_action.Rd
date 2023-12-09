@@ -4,13 +4,12 @@
 \alias{log_action}
 \title{Record an action in the log}
 \usage{
-log_action(action = "", note = "", type = "INFO", loop_num = NULL)
+log_action(action = "", url = "", type = "INFO", loop_num = NULL)
 }
 \arguments{
 \item{action}{Description of the change}
 
-\item{note}{Any relevant notes (e.g. if the change is part of a larger set
-of changes)}
+\item{url}{URL of the source of the action}
 
 \item{type}{Type of message ("INFO", "ERROR", "ACTION TAKEN", "ACTION NEEDED")}
 

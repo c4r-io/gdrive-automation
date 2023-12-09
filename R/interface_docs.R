@@ -20,7 +20,8 @@ read_roadmap_statuses <- function(roadmap_id, dl_path = tempfile(fileext = ".doc
 
     ## find statuses
     statuses <- extract_roadmap_statuses(content) %>%
-        format_statuses(title = title, miniunit_names = miniunit_names)
+        format_statuses(title = title, miniunit_names = miniunit_names) %>%
+        as_statuses()
 }
 
 #' Extract the title of a roadmap
@@ -101,7 +102,8 @@ extract_roadmap_signoffs <- function(content)
 extract_roadmap_statuses <- function(content)
 {
     utils::data("parsing_dat")
-    parsing_dat$pattern <- stringr::str_glue("({gdrv_auto_env$status_pattern})\\s*{parsing_dat$label}")
+    status_pattern <- getOption("gdrv_auto_env.status_pattern")
+    parsing_dat$pattern <- stringr::str_glue("({status_pattern})\\s*{parsing_dat$label}")
 
     ## find phase label and signoff labels
     phase_labels <- extract_roadmap_phases(content)
@@ -189,11 +191,12 @@ format_statuses <- function(statuses, title, miniunit_names)
         statuses <- rbind(statuses, to_add)
     }
 
+    phase_names <- getOption("gdrv_auto_env.phase_names")
     # reorder and format statuses
     statuses %>%
         dplyr::arrange(phase, mini_unit) %>%
         dplyr::mutate(unit = title,
-                      phase = gdrv_auto_env$phase_names[.data$phase],
+                      phase = phase_names[.data$phase],
                       mini_unit = miniunit_names[.data$mini_unit]) %>%
         dplyr::select(Unit = .data$unit,
                       `Mini-Unit` = .data$mini_unit,

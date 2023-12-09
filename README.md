@@ -18,6 +18,9 @@ Specific actions include:
   notifications, update files)
 - check for updates in the Unit Tracking spreadsheet and process
   accordingly (send notifications, update files)
+- send notifications (via CRM API integraton?)
+- log actions
+- log todos (actions to be taken by human)
 
 # Data Model
 
@@ -34,8 +37,8 @@ The data that is unique in the roadmap is:
 
 Both the roadmap and the tracker will contain status indicators for
 various components / phases of a unit. (The technical limitation here is
-embedding in the google doc an interactive interface for data that is
-stored elsewhere.)
+a pulldown item in a google doc cannot be manipulated through the API.
+Its value can be read by exporting the google doc, however.)
 
 There are 4 states for the status, which generally progresses from:
 
@@ -51,8 +54,12 @@ No action needed.
 
 ### Case 1. Tracker is “further along” than the Roadmap
 
-1.  Update the roadmap to match.
-2.  Log the change.
+1.  Check if a todo already exists for updating the roadmap.
+
+<!-- -->
+
+1.  if NO, then create a new todo for the update
+2.  if YES, then no action needed
 
 ### Case 2. Roadmap is “further along” than the Tracker
 
@@ -76,8 +83,7 @@ No action needed.
 2.  Send notifications as necessary.
 3.  Log the change.
 
-#### Case 2d. Anything else.
+### Case 3. Anything else.
 
-1.  Revert the roadmap to match the tracker.
-2.  Notify Hao of the discrepancy.
-3.  Log the change.
+1.  Notify Hao of the discrepancy.
+2.  Log the discrepancy.

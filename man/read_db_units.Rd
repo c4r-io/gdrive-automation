@@ -4,7 +4,7 @@
 \alias{read_db_units}
 \title{Read the database of links for all units}
 \usage{
-read_db_units(id = gdrv_auto_env$URL_db_units)
+read_db_units(id = getOption("gdrv_auto_env.URL_db_units"))
 }
 \arguments{
 \item{id}{The URL for the googlesheet with the central DB of all units}
