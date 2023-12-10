@@ -23,3 +23,21 @@ read_tracker_statuses <- function(url, sheet = "unit 1")
         as_statuses()
 }
 
+#' Update the tracker data
+#'
+#' @param tracker_dat new data to put into the tracker
+#' @param tracker_url url for the tracker
+#' @param tracker_sheet sheet for the tracker
+#'
+#' @return NULL
+#' @export
+update_tracker_data <- function(tracker_dat, tracker_url, tracker_sheet)
+{
+    googlesheets4::range_write(tracker_url,
+                               tracker_dat,
+                               tracker_sheet,
+                               range = "A3",
+                               col_names = FALSE,
+                               reformat = FALSE)
+    log_action("Updated Tracker Data", url = tracker_url)
+}

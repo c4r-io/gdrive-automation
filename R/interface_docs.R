@@ -1,14 +1,14 @@
 #' Download a roadmap and extract statuses
 #'
-#' @param roadmap_id the drv_id of a roadmap file
+#' @param roadmap_url the url of a roadmap file
 #' @param dl_path path to where to download the roadmap file
 #'
 #' @return a data.frame of statuses, mirroring the structure of \link{read_tracker_statuses}
 #' @export
-read_roadmap_statuses <- function(roadmap_id, dl_path = tempfile(fileext = ".docx"))
+read_roadmap_statuses <- function(roadmap_url, dl_path = tempfile(fileext = ".docx"))
 {
     ## download roadmap as docx
-    googledrive::drive_download(roadmap_id, dl_path)
+    googledrive::drive_download(roadmap_url, dl_path)
 
     ## read in docx
     roadmap <- officer::read_docx(dl_path)

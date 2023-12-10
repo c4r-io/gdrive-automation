@@ -4,10 +4,10 @@
 \alias{read_roadmap_statuses}
 \title{Download a roadmap and extract statuses}
 \usage{
-read_roadmap_statuses(roadmap_id, dl_path = tempfile(fileext = ".docx"))
+read_roadmap_statuses(roadmap_url, dl_path = tempfile(fileext = ".docx"))
 }
 \arguments{
-\item{roadmap_id}{the drv_id of a roadmap file}
+\item{roadmap_url}{the url of a roadmap file}
 
 \item{dl_path}{path to where to download the roadmap file}
 }

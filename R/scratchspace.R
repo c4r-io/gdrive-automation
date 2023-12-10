@@ -25,7 +25,6 @@ if (run)
     tryCatch({
         db_units <- read_db_units()
         roadmap_urls <- db_units$`Roadmap URL`
-        roadmap_ids <- googledrive::as_id(roadmap_urls)
         tracker_urls <- db_units$`Tracker URL`
         tracker_sheets <- db_units$`Tracker Sheet Name`
     }, error = function(e) {
@@ -36,8 +35,8 @@ if (run)
         idx <- 1
 
         # get statuses from unit roadmap
-        roadmap_id <- roadmap_ids[idx]
-        roadmap_dat <- read_roadmap_statuses(roadmap_id)
+        roadmap_url <- roadmap_urls[idx]
+        roadmap_dat <- read_roadmap_statuses(roadmap_url)
 
         # get statuses from task spreadsheet
         tracker_url <- tracker_urls[idx]
@@ -52,7 +51,7 @@ if (run)
         {
             title(tracker_dat) <- title(roadmap_dat)
             log_action(paste0("Updating title to '", title(tracker_dat), "'"),
-                       note = tracker_url,
+                       url = tracker_url,
                        "ACTION TAKEN")
         }
 
@@ -64,53 +63,21 @@ if (run)
             log_action(paste0("Updating mini-unit titles to {'",
                               paste0(mini_units(tracker_dat), collapse = "', '"),
                               "'}"),
-                       note = tracker_url,
+                       url = tracker_url,
                        "ACTION TAKEN")
         }
 
-        # check for updated statuses
-        if (!identical(roadmap_dat$Status,
-                       tracker_dat$Status))
-        {
-            diff_statuses <- which(roadmap_dat$Status != tracker_dat$Status)
+        # check for differences in statuses
+        tracker_dat <- handle_diff_statuses(roadmap_dat, roadmap_url,
+                                            tracker_dat, tracker_url)
 
-            # go through each status
-            for(i in diff_statuses)
-            {
-                roadmap_status <- roadmap_dat$Status[i]
-                tracker_status <- tracker_dat$Status[i]
-                # if roadmap is submitted and tracker is not started
-                # take action for submission
-                if (roadmap_status == "Submitted" &&
-                    tracker_status == "Not started")
-                {
-                    tracker_dat$Status[i] <- "Submitted"
-                    log_action(paste0("Updating status: {",
-                                      format_status_msg(tracker_status, sep = ", "),
-                                      "}"),
-                               note = tracker_URL,
-                               "ACTION TAKEN")
-                    notify(to = "CENTER",
-                           msg = format_status_msg(roadmap_status))
-                }
-
-                # if roadmap is approved and tracker is not approved
-                # log action needed (check if tracker needs updating)
-                # if tracker is approved and roadmap is not approved
-                # log action needed (update roadmap)
-                # if any other discrepancy
-                # log action needed
-
-
-
-            }
-        }
+        # CLEANUP: merge staged todos and updated tracker data
+        merge_todo()
+        update_tracker_data(tracker_dat, tracker_url, tracker_sheet)
 
     }, error = function(e) {
         log_action(e$message, type = "ERROR")
     })
 
-
     log_action("Ending Processing Loop", note = "Success")
-
 }
