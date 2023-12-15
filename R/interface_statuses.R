@@ -137,7 +137,7 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                               "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
-            notify(to = "CENTER",
+            notify(to = "Hao Ye",
                    msg = format_status_msg(roadmap_status))
 
         } else if (roadmap_status == "Approved" &&
@@ -151,7 +151,7 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                               "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
-            notify(to = "CENTER",
+            notify(to = "Hao Ye",
                    msg = format_status_msg(roadmap_status))
 
         } else if (tracker_status == "Approved" &&

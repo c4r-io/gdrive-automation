@@ -4,10 +4,10 @@
 \alias{notify}
 \title{Send notification}
 \usage{
-notify(to = "CENTER", msg)
+notify(to = "Hao Ye", msg, notify_text = "New Notification")
 }
 \arguments{
-\item{to}{either "CENTER" or "NIH" or a specific METER}
+\item{to}{a vector of names or emails}
 
 \item{msg}{contents of the notification}
 }

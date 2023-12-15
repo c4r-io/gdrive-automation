@@ -18,19 +18,22 @@ format_status_msg <- function(status_row, sep = "\n")
 
 #' Send notification
 #'
-#' @param to either "CENTER" or "NIH" or a specific METER
+#' @param to a vector of names or emails
 #' @param msg contents of the notification
 #'
 #' @return NULL
 #' @export
-notify <- function(to = "CENTER", msg)
+notify <- function(to = "Hao Ye", msg, notify_text = "New Notification")
 {
     notify_ids <- match_users(to)
+    item_id <- create_item(msg)
+    for (user_id in notify_ids)
+    {
+        send_notification(notify_text, item_id, user_id)
+    }
 
     invisible()
 }
-
-
 
 #' Send a notification on the item in Monday
 #'
