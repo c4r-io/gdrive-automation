@@ -77,7 +77,7 @@ merge_todo <- function()
                                  "- url = {todo_staging$url[missing_todo_idx]}\n"),
                collapse = "\n")
     )
-    notify(to = "CENTER", msg = notify_msg)
+    notify(to = "Hao Ye", msg = notify_msg)
 
     # clear todo-staging
     blank_todo <- todo_staging[c(), c("datetime", "action", "url", "loop_num")]

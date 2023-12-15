@@ -6,7 +6,7 @@
 #' @export
 read_db_units <- function(id = getOption("gdrv_auto_env.URL_db_units"))
 {
-    googlesheets4::read_sheet(id, sheet = "Unit Info", skip = 1)
+    googlesheets4::read_sheet(id, sheet = "Unit Overview", skip = 2)
 }
 
 
