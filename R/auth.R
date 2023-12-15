@@ -2,7 +2,7 @@
 #'
 #' @return NULL
 #' @export
-do_auth <- function()
+gdrv_auth <- function()
 {
     my_token <- decrypt_gdrive_token()
     googledrive::drive_auth(token = my_token)
@@ -11,7 +11,7 @@ do_auth <- function()
 }
 
 
-#' Get a Token for access to google drive
+#' Get a token for access to google drive
 #'
 #' This function expects that there is an encrypted file in RDS format with an
 #' OAuth token, and an environmental variable with the key to decrypt the token.
@@ -31,5 +31,17 @@ decrypt_gdrive_token <- function(token_file = ".secrets/gdrive-token.rds",
                                 key = decrypt_env_var)
     }
 
+    invisible(token)
+}
+
+#' Get a token for access to Monday
+#'
+#' @param token_env_var name of the environmental variable that is the token
+#'
+#' @return a character
+#' @export
+get_monday_token <- function(token_env_var = "monday_token")
+{
+    token <- Sys.getenv(token_env_var, unset = NA)
     invisible(token)
 }

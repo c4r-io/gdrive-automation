@@ -14,6 +14,8 @@ Imports:
     gargle,
     googledrive,
     googlesheets4,
+    httr,
+    jsonlite,
     magrittr,
     officer,
     rlang,

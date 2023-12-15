@@ -4,7 +4,7 @@ if (run)
     parsing_dat <- read.csv("inst/parsing_dat.csv")
     use_data(parsing_dat, overwrite = TRUE)
 
-    do_auth()
+    gdrv_auth()
 
     # access info on all units
     db_units <- read_db_units()
@@ -17,7 +17,7 @@ if (run)
 if (run)
 {
     # start of processing loop
-    do_auth()
+    gdrv_auth()
     set_loop_num_var()
     log_action("Starting Processing Loop")
 

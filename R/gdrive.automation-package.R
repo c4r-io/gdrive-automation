@@ -42,7 +42,11 @@ utils::globalVariables(".data")
                          "7. Polish, Review, Testing"),
 
         # regex Pattern for Allowed Statuses
-        gdrv_auto_env.status_pattern = "Submitted|Under review|Approved|Not started"
+        gdrv_auto_env.status_pattern = "Submitted|Under review|Approved|Not started",
+
+        # board id for notifications
+        gdrv_auto_env.monday_board_id = "5665309206"
+
     )
     toset <- !(names(op.gdrv_auto_env) %in% names(op))
     if (any(toset)) options(op.gdrv_auto_env[toset])
