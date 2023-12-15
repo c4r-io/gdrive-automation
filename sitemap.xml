@@ -37,9 +37,6 @@
     <loc>/reference/decrypt_gdrive_token.html</loc>
   </url>
   <url>
-    <loc>/reference/do_auth.html</loc>
-  </url>
-  <url>
     <loc>/reference/extract_roadmap_miniunits.html</loc>
   </url>
   <url>
@@ -70,7 +67,16 @@
     <loc>/reference/gdrive.automation-package.html</loc>
   </url>
   <url>
+    <loc>/reference/gdrv_auth.html</loc>
+  </url>
+  <url>
     <loc>/reference/get_last_loop_num.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_monday_token.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_users.html</loc>
   </url>
   <url>
     <loc>/reference/handle_diff_statuses.html</loc>
@@ -104,6 +110,9 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/post_query.html</loc>
   </url>
   <url>
     <loc>/reference/read_db_units.html</loc>
