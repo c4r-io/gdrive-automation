@@ -3,5 +3,6 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   Setup-Google-OAuth: Setup-Google-OAuth.html
-last_built: 2023-12-18T17:51Z
+  gdrive-automation: gdrive-automation.html
+last_built: 2023-12-18T18:19Z
 
