@@ -45,7 +45,7 @@ utils::globalVariables(".data")
         gdrv_auto_env.status_pattern = "Submitted|Under review|Approved|Not started",
 
         # board id for notifications
-        gdrv_auto_env.monday_board_id = "5665309206"
+        gdrv_auto_env.monday_board_id = "5704206865"
 
     )
     toset <- !(names(op.gdrv_auto_env) %in% names(op))

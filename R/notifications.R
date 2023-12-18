@@ -18,13 +18,13 @@ format_status_msg <- function(status_row, sep = "\n")
 
 #' Send notification
 #'
-#' @param to a vector of names or emails
 #' @param msg contents of the notification
 #' @param notify_text message on the notification itself
+#' @param to a vector of names or emails
 #'
 #' @return NULL
 #' @export
-notify <- function(to = "Hao Ye", msg, notify_text = "New Notification")
+notify <- function(msg, notify_text = "New Notification", to = "Hao Ye")
 {
     notify_ids <- match_users(to)
     item_id <- create_item(msg)
@@ -65,7 +65,7 @@ send_notification <- function(msg, item_id, user_id)
 #'
 #' @return character (item_id of new item)
 #' @export
-create_item <- function(msg, board_id = getOption("grdv_auto_env.monday_board_id"))
+create_item <- function(msg, board_id = getOption("gdrv_auto_env.monday_board_id"))
 {
     q_create_item <- jsonlite::toJSON(
         list(query = stringr::str_glue("mutation {

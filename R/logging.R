@@ -70,14 +70,13 @@ merge_todo <- function()
     googlesheets4::sheet_append(my_log, todo_to_add, sheet = "todo")
 
     # sent notification
-    notify_msg <- paste0(
-        "NEW TODOs ADDED\n",
-        paste0(stringr::str_glue("TODO #{seq_along(missing_todo_idx)}\n",
-                                 "- action = {todo_staging$action[missing_todo_idx]}\n",
-                                 "- url = {todo_staging$url[missing_todo_idx]}\n"),
-               collapse = "\n")
-    )
-    notify(to = "Hao Ye", msg = notify_msg)
+    notify_msg <- paste0(stringr::str_glue("TODO #{seq_along(missing_todo_idx)}\n",
+                                           "- action = {todo_staging$action[missing_todo_idx]}\n",
+                                           "- url = {todo_staging$url[missing_todo_idx]}\n"),
+                         collapse = "\n")
+    notify(msg = notify_msg,
+           notify_text = "New TODOs Added",
+           to = "Hao Ye")
 
     # clear todo-staging
     blank_todo <- todo_staging[c(), c("datetime", "action", "url", "loop_num")]

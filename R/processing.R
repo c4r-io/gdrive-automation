@@ -92,8 +92,9 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                               "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
-            notify(to = "Hao Ye",
-                   msg = format_status_msg(roadmap_status))
+            notify(msg = format_status_msg(roadmap_status),
+                   notify_text = "New Submission",
+                   to = "Hao Ye")
 
         } else if (roadmap_status == "Approved" &&
                    roadmap_dat$`Signoff by`[i] == "METER") {
@@ -106,8 +107,9 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                               "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
-            notify(to = "Hao Ye",
-                   msg = format_status_msg(roadmap_status))
+            notify(msg = format_status_msg(roadmap_status),
+                   notify_text = "METER Approved",
+                   to = "Hao Ye")
 
         } else if (tracker_status == "Approved" &&
                    roadmap_status != "Approved") {
