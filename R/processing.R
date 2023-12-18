@@ -4,7 +4,7 @@
 #' @param tracker_url URL of a google sheet (Unit Tracker)
 #' @param tracker_sheet name of the google sheet for the specific unit's tasks
 #'
-#' @return
+#' @return NULL
 #' @export
 sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet)
 {
@@ -50,6 +50,8 @@ sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet)
     }, error = function(e) {
         log_action(e$message, type = "ERROR")
     })
+
+    invisible()
 }
 
 

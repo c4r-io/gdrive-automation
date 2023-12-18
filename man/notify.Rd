@@ -10,6 +10,8 @@ notify(to = "Hao Ye", msg, notify_text = "New Notification")
 \item{to}{a vector of names or emails}
 
 \item{msg}{contents of the notification}
+
+\item{notify_text}{message on the notification itself}
 }
 \description{
 Send notification

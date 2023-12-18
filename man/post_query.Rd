@@ -12,7 +12,7 @@ post_query(query, token = get_monday_token())
 \item{token}{api access token}
 }
 \value{
-result from \link[httr]{post}
+result from \link[httr]{POST}
 }
 \description{
 Send query to Monday API

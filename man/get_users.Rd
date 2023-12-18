@@ -6,9 +6,12 @@
 \usage{
 get_users(token = get_monday_token())
 }
+\arguments{
+\item{token}{api access token}
+}
 \value{
 data.frame (columns: \code{email} and \code{id})
 }
 \description{
-\inheritParams{post_query}
+Query Monday for user emails and ids
 }

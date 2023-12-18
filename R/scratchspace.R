@@ -31,9 +31,8 @@ if (run)
         log_action(e$message, type = "ERROR")
     })
 
-    num_units <- NROW(db_units)
-
-    for (idx in seq(num_units))
+    # for (idx in seq(num_units))
+    for (idx in 10:19)
     {
         roadmap_url <- roadmap_urls[idx]
         tracker_url <- tracker_urls[idx]

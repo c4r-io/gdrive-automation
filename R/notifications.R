@@ -20,6 +20,7 @@ format_status_msg <- function(status_row, sep = "\n")
 #'
 #' @param to a vector of names or emails
 #' @param msg contents of the notification
+#' @param notify_text message on the notification itself
 #'
 #' @return NULL
 #' @export
@@ -98,13 +99,13 @@ match_users <- function(to = "Hao Ye")
         warning("Unable to match user for notifications: ", paste0(to[is.na(match_idx)], collapse = ", \n"))
     }
 
-    monday_users$id[na.omit(match_idx)]
+    monday_users$id[stats::na.omit(match_idx)]
 }
 
 
 #' Query Monday for user emails and ids
 #'
-#' \inheritParams{post_query}
+#' @inheritParams post_query
 #'
 #' @return data.frame (columns: `email` and `id`)
 #' @export
@@ -135,7 +136,7 @@ get_users <- function(token = get_monday_token())
 #' @param query json (formatted according to \url{https://developer.monday.com/api-reference/docs/introduction-to-graphql})
 #' @param token api access token
 #'
-#' @return result from \link[httr]{post}
+#' @return result from \link[httr]{POST}
 #' @export
 post_query <- function(query, token = get_monday_token())
 {
