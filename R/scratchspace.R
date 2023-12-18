@@ -32,7 +32,7 @@ if (run)
     })
 
     # for (idx in seq(num_units))
-    for (idx in 10:19)
+    for (idx in 1:20)
     {
         roadmap_url <- roadmap_urls[idx]
         tracker_url <- tracker_urls[idx]

@@ -19,7 +19,7 @@ read_db_units <- function(id = getOption("gdrv_auto_env.URL_db_units"))
 #' @export
 read_tracker_statuses <- function(url, sheet = "unit 1")
 {
-    googlesheets4::read_sheet(url, sheet, skip = 1) %>%
+    googlesheets4::read_sheet(url, sheet, skip = 1, trim_ws = FALSE) %>%
         as_statuses()
 }
 

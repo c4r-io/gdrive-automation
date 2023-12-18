@@ -76,7 +76,10 @@ mini_units <- function(x)
 {
     stopifnot(is.statuses(x))
     mini_unit_idx <- seq(from = 7, to = 38, by = 4)
-    x$`Mini-Unit`[mini_unit_idx]
+    mini_unit_names <- x$`Mini-Unit`[mini_unit_idx]
+    mini_unit_names["" %in% mini_unit_names] <- NA
+
+    mini_unit_names
 }
 
 #' Set mini-unit titles of `statuses` object

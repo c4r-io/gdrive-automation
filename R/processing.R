@@ -17,6 +17,7 @@ sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet)
 
         # check for same number of rows
         stopifnot(NROW(roadmap_dat) == NROW(tracker_dat))
+        tracker_has_updates <- FALSE
 
         # check for updated unit title
         if (title(roadmap_dat) != title(tracker_dat))
@@ -25,6 +26,7 @@ sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet)
             log_action(paste0("Updating title to '", title(tracker_dat), "'"),
                        url = tracker_url,
                        "ACTION TAKEN")
+            tracker_has_updates <- TRUE
         }
 
         # check for updated mini-unit names
@@ -37,15 +39,24 @@ sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet)
                               "'}"),
                        url = tracker_url,
                        "ACTION TAKEN")
+            tracker_has_updates <- TRUE
         }
 
         # check for differences in statuses
-        tracker_dat <- handle_diff_statuses(roadmap_dat, roadmap_url,
-                                            tracker_dat, tracker_url)
+        diff_statuses <- which(roadmap_dat$Status != tracker_dat$Status)
+        if (length(diff_statuses) != 0)
+        {
+            tracker_dat <- handle_diff_statuses(roadmap_dat, roadmap_url,
+                                                tracker_dat, tracker_url)
+            tracker_has_updates <- TRUE
+        }
 
         # CLEANUP: merge staged todos and updated tracker data
         merge_todo()
-        update_tracker_data(tracker_dat, tracker_url, tracker_sheet)
+        if (tracker_has_updates)
+        {
+            update_tracker_data(tracker_dat, tracker_url, tracker_sheet)
+        }
 
     }, error = function(e) {
         log_action(e$message, type = "ERROR")
@@ -67,13 +78,7 @@ sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet)
 handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                                  tracker_dat, tracker_url)
 {
-    # check for updated statuses
     diff_statuses <- which(roadmap_dat$Status != tracker_dat$Status)
-
-    if (length(diff_statuses) == 0)
-    {
-        return(tracker_dat)
-    }
 
     for (i in diff_statuses)
     {

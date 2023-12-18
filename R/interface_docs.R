@@ -49,7 +49,7 @@ extract_roadmap_miniunits <- function(content)
 {
     table_cells <- subset(content, content_type %in% "table cell")
     tt <- table(table_cells$doc_index)
-    miniunit_doc_index <- as.numeric(names(tt)[tt == max(tt)])
+    miniunit_doc_index <- max(as.numeric(names(tt)[tt == max(tt)]))
     miniunit_table <- subset(table_cells, doc_index == miniunit_doc_index)
     stopifnot(NROW(miniunit_table) == 45)
     miniunit_table$text[2:9]
