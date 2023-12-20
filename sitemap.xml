@@ -43,7 +43,7 @@
     <loc>/reference/decrypt_gdrive_token.html</loc>
   </url>
   <url>
-    <loc>/reference/extract_roadmap_miniunits.html</loc>
+    <loc>/reference/extract_roadmap_mini_units.html</loc>
   </url>
   <url>
     <loc>/reference/extract_roadmap_phases.html</loc>
@@ -113,9 +113,6 @@
   </url>
   <url>
     <loc>/reference/parse_statuses.html</loc>
-  </url>
-  <url>
-    <loc>/reference/parsing_dat.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
