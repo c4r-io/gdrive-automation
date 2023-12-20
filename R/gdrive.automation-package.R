@@ -7,19 +7,6 @@
 ## usethis namespace: end
 NULL
 
-#' Expected Structure of Statuses
-#'
-#' @format ## `who`
-#' A data frame with 22 rows and 5 columns:
-#' \describe{
-#'   \item{phase}{Unit Roadmap Phase}
-#'   \item{parse_group}{Identify which statuses occur in a shared signoff box}
-#'   \item{task}{name of the task}
-#'   \item{signoff}{name of the party responsible for signoff}
-#'   \item{label}{string that identifies the status}
-#' }
-"parsing_dat"
-
 utils::globalVariables(".data")
 
 .onLoad <- function(libname, pkgname)
@@ -41,12 +28,19 @@ utils::globalVariables(".data")
                          "6. Internal Testing",
                          "7. Polish, Review, Testing"),
 
-        # regex Pattern for Allowed Statuses
-        gdrv_auto_env.status_pattern = "Submitted|Under review|Approved|Not started",
-
         # board id for notifications
-        gdrv_auto_env.monday_board_id = "5704206865"
+        gdrv_auto_env.monday_board_id = "5704206865",
 
+        # regex Pattern for Allowed Statuses
+        gdrv_auto_env.statuses.regex_pattern = "Submitted|Under review|Approved|Not started",
+
+        # variables for parsing checking statuses
+        gdrv_auto_env.statuses.parsing_dat = parsing_dat,
+        gdrv_auto_env.statuses.num_checks = 50,
+        gdrv_auto_env.statuses.num_mini_units = 8,
+        gdrv_auto_env.statuses.activity_phase = 4,
+        gdrv_auto_env.statuses.num_activity_checks = sum(parsing_dat$phase == 4),
+        gdrv_auto_env.statuses.mini_unit_idx = seq(from = 1 + sum(parsing_dat$phase < 4), length.out = 8 * sum(parsing_dat$phase == 4))
     )
     toset <- !(names(op.gdrv_auto_env) %in% names(op))
     if (any(toset)) options(op.gdrv_auto_env[toset])

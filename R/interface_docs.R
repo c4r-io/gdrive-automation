@@ -16,11 +16,11 @@ read_roadmap_statuses <- function(roadmap_url, dl_path = tempfile(fileext = ".do
 
     # find title
     title <- extract_roadmap_title(content)
-    miniunit_names <- extract_roadmap_miniunits(content)
+    mini_unit_names <- extract_roadmap_mini_units(content)
 
     ## find statuses
     statuses <- extract_roadmap_statuses(content) %>%
-        format_statuses(title = title, miniunit_names = miniunit_names) %>%
+        format_statuses(title = title, mini_unit_names = mini_unit_names) %>%
         as_statuses()
 }
 
@@ -43,16 +43,18 @@ extract_roadmap_title <- function(content)
 #'
 #' @param content a data.frame (output from \link[officer]{docx_summary})
 #'
-#' @return character vector (of length 8)
+#' @return character vector (of length = # of mini-units)
 #' @export
-extract_roadmap_miniunits <- function(content)
+extract_roadmap_mini_units <- function(content)
 {
+    num_mini_units <- getOption("gdrv_auto_env.statuses.num_mini_units")
+
     table_cells <- subset(content, content_type %in% "table cell")
     tt <- table(table_cells$doc_index)
-    miniunit_doc_index <- max(as.numeric(names(tt)[tt == max(tt)]))
-    miniunit_table <- subset(table_cells, doc_index == miniunit_doc_index)
-    stopifnot(NROW(miniunit_table) == 45)
-    miniunit_table$text[2:9]
+    mini_unit_doc_index <- max(as.numeric(names(tt)[tt == max(tt)]))
+    mini_unit_table <- subset(table_cells, doc_index == mini_unit_doc_index)
+    stopifnot(NROW(mini_unit_table) == 5 * (num_mini_units + 1))
+    mini_unit_table$text[seq(from = 2, length.out = num_mini_units)]
 }
 
 #' Extract the labels for each Phase
@@ -101,8 +103,8 @@ extract_roadmap_signoffs <- function(content)
 #' @export
 extract_roadmap_statuses <- function(content)
 {
-    utils::data("parsing_dat")
-    status_pattern <- getOption("gdrv_auto_env.status_pattern")
+    parsing_dat <- getOption("gdrv_auto_env.statuses.parsing_dat")
+    status_pattern <- getOption("gdrv_auto_env.statuses.regex_pattern")
     parsing_dat$pattern <- stringr::str_glue("({status_pattern})\\s*{parsing_dat$label}")
 
     ## find phase label and signoff labels
@@ -135,7 +137,7 @@ extract_roadmap_statuses <- function(content)
         stopifnot(curr_statuses$doc_index < phase_labels$doc_index[curr_phase + 1])
 
         # identify parse group
-        if (curr_phase == 4)
+        if (curr_phase == getOption("gdrv_auto_env.statuses.activity_phase"))
         {
             parse_grp_idx <- 1
             if (is.na(curr_mini_unit))
@@ -167,26 +169,31 @@ extract_roadmap_statuses <- function(content)
 #' Cleanup and Format Statuses
 #'
 #' @param statuses a data.frame, usually the output of \link{extract_roadmap_statuses}
-#' @param miniunit_names a character vector, usually the output of \link{extract_roadmap_miniunits}
+#' @param mini_unit_names a character vector, usually the output of \link{extract_roadmap_mini_units}
 #' @param title name of the unit
 #'
 #' @return a data.frame
 #' @export
-format_statuses <- function(statuses, title, miniunit_names)
+format_statuses <- function(statuses, title, mini_unit_names)
 {
     stopifnot(!anyNA(statuses$status))
 
+    activity_phase <- getOption("gdrv_auto_env.statuses.activity_phase")
+    num_expected_mini_units <- getOption("gdrv_auto_env.statuses.num_mini_units")
+
     # make sure there are 8 mini-units in phase 4
-    num_mini_units_phase_4 <- subset(statuses, phase == 4)[, "mini_unit"] %>%
+    num_mini_units <- subset(statuses, phase == activity_phase)[, "mini_unit"] %>%
         unique() %>%
         length()
+    num_missing_mini_units <- num_expected_mini_units - num_mini_units
 
-    if (num_mini_units_phase_4 < 8)
+    if (num_missing_mini_units > 0)
     {
-        num_missing_mini_units <- 8 - num_mini_units_phase_4
-        d <- subset(statuses, phase == 4 & mini_unit == 1)
+        d <- subset(statuses, phase == activity_phase & mini_unit == 1)
         to_add <- do.call("rbind", replicate(num_missing_mini_units, d, simplify = FALSE))
-        to_add$mini_unit <- rep(seq(to = 8, length.out = num_missing_mini_units), each = NROW(d))
+        to_add$mini_unit <- rep(seq(to = num_expected_mini_units,
+                                    length.out = num_missing_mini_units),
+                                each = NROW(d))
 
         statuses <- rbind(statuses, to_add)
     }
@@ -197,7 +204,7 @@ format_statuses <- function(statuses, title, miniunit_names)
         dplyr::arrange(phase, mini_unit) %>%
         dplyr::mutate(unit = title,
                       phase = phase_names[.data$phase],
-                      mini_unit = miniunit_names[.data$mini_unit]) %>%
+                      mini_unit = mini_unit_names[.data$mini_unit]) %>%
         dplyr::select(Unit = .data$unit,
                       `Mini-Unit` = .data$mini_unit,
                       Phase = .data$phase,

@@ -10,7 +10,7 @@ mini_units(x)
 \item{x}{object of type \code{statuses}}
 }
 \value{
-character (length 8)
+character (length = of mini-units)
 }
 \description{
 Get mini-unit titles of \code{statuses} object

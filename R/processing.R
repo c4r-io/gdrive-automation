@@ -8,6 +8,18 @@
 #' @export
 sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet)
 {
+    # stop early if missing values
+    if (anyNA(c(roadmap_url, tracker_url, tracker_sheet)))
+    {
+        log_action(paste0("Skipping Unit with NA values: \n",
+                          "  roadmap_url: ", roadmap_url, "\n",
+                          "  tracker_url: ", tracker_url, "\n",
+                          "  tracker_sheet: ", tracker_sheet, "\n"),
+                   url = tracker_url,
+                   type = "INFO")
+        return(invisible())
+    }
+
     tryCatch({
         # get statuses from unit roadmap
         roadmap_dat <- read_roadmap_statuses(roadmap_url)
@@ -52,14 +64,13 @@ sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet)
         }
 
         # CLEANUP: merge staged todos and updated tracker data
-        merge_todo()
         if (tracker_has_updates)
         {
             update_tracker_data(tracker_dat, tracker_url, tracker_sheet)
         }
 
     }, error = function(e) {
-        log_action(e$message, type = "ERROR")
+        log_action(e$message, url = roadmap_url, type = "ERROR")
     })
 
     invisible()

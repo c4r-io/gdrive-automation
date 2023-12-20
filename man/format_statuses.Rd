@@ -4,14 +4,14 @@
 \alias{format_statuses}
 \title{Cleanup and Format Statuses}
 \usage{
-format_statuses(statuses, title, miniunit_names)
+format_statuses(statuses, title, mini_unit_names)
 }
 \arguments{
 \item{statuses}{a data.frame, usually the output of \link{extract_roadmap_statuses}}
 
 \item{title}{name of the unit}
 
-\item{miniunit_names}{a character vector, usually the output of \link{extract_roadmap_miniunits}}
+\item{mini_unit_names}{a character vector, usually the output of \link{extract_roadmap_mini_units}}
 }
 \value{
 a data.frame

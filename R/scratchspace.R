@@ -2,7 +2,7 @@ run = FALSE
 if (run)
 {
     parsing_dat <- read.csv("inst/parsing_dat.csv")
-    use_data(parsing_dat, overwrite = TRUE)
+    save("parsing_dat", file = "R/sysdata.rda")
 
     gdrv_auth()
 
@@ -28,16 +28,18 @@ if (run)
         tracker_urls <- db_units$`unit tasks URL`
         tracker_sheets <- db_units$`Sheet Name`
     }, error = function(e) {
-        log_action(e$message, type = "ERROR")
+        log_action(e$message,
+                   url = getOption("gdrv_auto_env.URL_db_units"),
+                   type = "ERROR")
     })
 
-    # for (idx in seq(num_units))
-    for (idx in 1:20)
+    for (idx in seq(NROW(db_units)))
     {
         roadmap_url <- roadmap_urls[idx]
         tracker_url <- tracker_urls[idx]
         tracker_sheet <- tracker_sheets[idx]
         sync_statuses(roadmap_url, tracker_url, tracker_sheet)
+        merge_todo()
     }
 
     log_action("Ending Processing Loop")

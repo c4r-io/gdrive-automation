@@ -1,6 +1,6 @@
 Package: gdrive.automation
 Title: Sync and Automate C4R Unit Progress
-Version: 0.9.0
+Version: 0.9.2
 Authors@R: 
     person("Hao", "Ye", , "haoye@seas.upenn.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8630-1458"))
@@ -19,7 +19,8 @@ Imports:
     magrittr,
     officer,
     rlang,
-    stringr
+    stringr,
+    testthat
 Suggests: 
     knitr,
     rmarkdown

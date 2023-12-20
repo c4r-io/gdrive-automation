@@ -61,26 +61,28 @@ merge_todo <- function()
 
     todo$id <- paste(todo$action, todo$url)
     todo_staging$id <- paste(todo_staging$action, todo_staging$url)
-
     missing_todo <- setdiff(todo_staging$id, todo$id)
-    missing_todo_idx <- match(missing_todo, todo_staging$id)
 
     # copy missing todo items in staging to todo list
-    todo_to_add <- todo_staging[missing_todo_idx, c("datetime", "action", "url", "loop_num")]
-    googlesheets4::sheet_append(my_log, todo_to_add, sheet = "todo")
+    if (length(missing_todo) > 0)
+    {
+        missing_todo_idx <- match(missing_todo, todo_staging$id)
+        todo_to_add <- todo_staging[missing_todo_idx, c("datetime", "action", "url", "loop_num")]
+        googlesheets4::sheet_append(my_log, todo_to_add, sheet = "todo")
 
-    # sent notification
-    notify_msg <- paste0(stringr::str_glue("TODO #{seq_along(missing_todo_idx)}\n",
-                                           "- action = {todo_staging$action[missing_todo_idx]}\n",
-                                           "- url = {todo_staging$url[missing_todo_idx]}\n"),
-                         collapse = "\n")
-    notify(msg = notify_msg,
-           notify_text = "New TODOs Added",
-           to = "Hao Ye")
+        # sent notification
+        notify_msg <- paste0(stringr::str_glue("TODO #{seq_along(missing_todo_idx)}\n",
+                                               "- action = {todo_staging$action[missing_todo_idx]}\n",
+                                               "- url = {todo_staging$url[missing_todo_idx]}\n"),
+                             collapse = "\n")
+        notify(msg = "Action Required on C4R Tracking Board",
+               notify_text = notify_msg,
+               to = "Hao Ye")
 
-    # clear todo-staging
-    blank_todo <- todo_staging[c(), c("datetime", "action", "url", "loop_num")]
-    googlesheets4::write_sheet(blank_todo, my_log, sheet = "todo-staging")
+        # clear todo-staging
+        blank_todo <- todo_staging[c(), c("datetime", "action", "url", "loop_num")]
+        googlesheets4::write_sheet(blank_todo, my_log, sheet = "todo-staging")
+    }
 
     invisible()
 }
