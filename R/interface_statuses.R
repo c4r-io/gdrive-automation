@@ -146,3 +146,35 @@ mini_units <- function(x)
     x$`Mini-Unit`[mini_unit_idx] <- rep(value, each = num_checks)
     x
 }
+
+#' Identify the next action item for a `statuses` object
+#'
+#' @param x object of type `statuses`
+#'
+#' @return character (what next action item is)
+#' @export
+identify_todo <- function(x)
+{
+    next_task <- x %>%
+        dplyr::filter(Status != "Approved") %>%
+        dplyr::first()
+
+    phase_num <- stringr::str_extract(next_task$Phase, "^(\\d+)\\.", 1)
+    task <- next_task$Task
+    signoff <- next_task$`Signoff by`
+    status <- next_task$Status
+
+    if (signoff == "METER" && status == "Not started")
+    {
+        todo <- "CENTER completes"
+    } else if (signoff == "METER") {
+        todo <- "METER reviews"
+    } else if (signoff != "METER" && status == "Not started") {
+        todo <- "METER completes"
+    } else if (signoff == "CENTER" && status != "Not started") {
+        todo <- "CENTER reviews"
+    } else {
+        todo <- paste0(signoff, " reviews")
+    }
+    stringr::str_glue("Phase {phase_num}: {todo} '{task}'")
+}
