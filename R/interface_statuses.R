@@ -116,7 +116,7 @@ mini_units <- function(x)
     mini_unit_idx <- getOption("gdrv_auto_env.statuses.mini_unit_idx")
     num_checks <- getOption("gdrv_auto_env.statuses.num_activity_checks")
     name_idx <- seq(from = min(mini_unit_idx), to = max(mini_unit_idx), by = num_checks)
-    mini_unit_names <- x$`Mini-Unit`[mini_unit_idx]
+    mini_unit_names <- x$`Mini-Unit`[name_idx]
     mini_unit_names[mini_unit_names == ""] <- NA
 
     mini_unit_names
@@ -141,7 +141,7 @@ mini_units <- function(x)
         value <- c(value, rep.int(NA, num_expected_mini_units - length(value)))
     } else if (length(value) > num_expected_mini_units)
     {
-        value <- value(seq(num_expected_mini_units))
+        value <- value[seq(num_expected_mini_units)]
     }
     x$`Mini-Unit`[mini_unit_idx] <- rep(value, each = num_checks)
     x
