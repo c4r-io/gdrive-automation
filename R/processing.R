@@ -93,23 +93,63 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
 
     for (i in diff_statuses)
     {
-        roadmap_status <- roadmap_dat$Status[i]
-        tracker_status <- tracker_dat$Status[i]
-
+        roadmap_status <- roadmap_dat[i, "Status"]
+        tracker_status <- tracker_dat[i, "Status"]
+        phase <- match(roadmap_dat[i, "Phase"], getOption("gdrv_auto_env.phase_names"))
 
         if (roadmap_status == "Submitted" &&
-            tracker_status == "Not started") {
+            tracker_status == "Not started" &&
+            phase == 4) {
+            # if roadmap is submitted and tracker is not started AND phase == 4
+            tracker_dat$Status[i] <- roadmap_status
+            roadmap_task <- roadmap_dat[i, "Task"]
+
+            if (roadmap_task == "Activity Description" ||
+                roadmap_task == "Activity Demonstration") {
+            ## notify Hao for METER to review Activtiy Description OR Activity Demonstration
+                status_msg <- format_status_msg(tracker_dat[i,])
+                log_action(paste0("Updating status: {\n", status_msg, "}"),
+                           url = tracker_url,
+                           "ACTION TAKEN")
+                notify(msg = status_msg,
+                       notify_text = format_notification_msg("METER to review: ", tracker_dat[i, ]),
+                       to = "Hao Ye")
+            } else if (roadmap_task == "Activity Tech Specs") {
+            ## notify Thomas to review Activity Tech Spec
+                status_msg <- format_status_msg(tracker_dat[i,])
+                log_action(paste0("Updating status: {\n", status_msg, "}"),
+                           url = tracker_url,
+                           "ACTION TAKEN")
+                notify(msg = status_msg,
+                       notify_text = format_notification_msg("Production to review: ", tracker_dat[i, ]),
+                       to = "Thomas McDonald")
+            } else if (roadmap_task == "Prototype") {
+                ## notify Hao and Thomas to review Prototype
+                status_msg <- format_status_msg(tracker_dat[i,])
+                log_action(paste0("Updating status: {\n", status_msg, "}"),
+                           url = tracker_url,
+                           "ACTION TAKEN")
+                notify(msg = status_msg,
+                       notify_text = format_notification_msg("CENTER to review: ", tracker_dat[i, ]),
+                       to = c("Thomas McDonald", "Hao Ye"))
+            } else {
+                stage_todo(paste0("Unknown Status Difference: {\n",
+                                  format_status_msg(tracker_dat[i,]),
+                                  "}"),
+                           url = roadmap_url)
+            }
+        } else if (roadmap_status == "Submitted" &&
+                   tracker_status == "Not started" && phase < 4) {
             # if roadmap is submitted and tracker is not started
             # take action for submission
 
             tracker_dat$Status[i] <- roadmap_status
-            log_action(paste0("Updating status: {\n",
-                              format_status_msg(tracker_dat[i,]),
-                              "}"),
+            status_msg <- format_status_msg(tracker_dat[i,])
+            log_action(paste0("Updating status: {\n", status_msg, "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
-            notify(msg = format_status_msg(roadmap_status),
-                   notify_text = "New Submission",
+            notify(msg = status_msg,
+                   notify_text = format_notification_msg("Submitted: ", tracker_dat[i, ]),
                    to = "Hao Ye")
 
         } else if (roadmap_status == "Approved" &&
@@ -118,13 +158,12 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
             # take action for approval
 
             tracker_dat$Status[i] <- roadmap_status
-            log_action(paste0("Updating status: {\n",
-                              format_status_msg(tracker_dat[i,]),
-                              "}"),
+            status_msg <- format_status_msg(tracker_dat[i,])
+            log_action(paste0("Updating status: {\n", status_msg, "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
-            notify(msg = format_status_msg(roadmap_status),
-                   notify_text = "METER Approved",
+            notify(msg = status_msg,
+                   notify_text = format_notification_msg("Approved: ", tracker_dat[i, ]),
                    to = "Hao Ye")
 
         } else if (tracker_status == "Approved" &&

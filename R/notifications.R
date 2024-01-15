@@ -1,7 +1,10 @@
 #' Format a status row for printing
 #'
+#' @descrption `format_status_msg()` contains all the details of a status update, whereas `format_notification_msg()` has just the phase number and the task
+#'
 #' @param status_row a single row of a `statuses` object
 #' @param sep character to separate each element in formatted output
+#' @name msg
 #'
 #' @return character (formatted message)
 #' @export
@@ -14,6 +17,19 @@ format_status_msg <- function(status_row, sep = "\n")
            "task: ", status_row$Task, sep,
            "signoff by: ", status_row$`Signoff by`, sep,
            "status: ", status_row$Status, sep)
+}
+
+#' @rdname msg
+#'
+#' @param prefix optional string to put in front of message
+#'
+#' @export
+format_notification_msg <- function(prefix, status_row, sep = "\n")
+{
+    stopifnot(NROW(status_row) == 1)
+    paste0(prefix,
+           "phase ", stringr::str_extract(status_row$Phase, "^(\\d+)", 1),
+           "; ", status_row$Task, sep)
 }
 
 #' Send notification

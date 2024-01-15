@@ -39,5 +39,6 @@ update_tracker_data <- function(tracker_dat, tracker_url, tracker_sheet)
                                range = "A3",
                                col_names = FALSE,
                                reformat = FALSE)
-    log_action("Updated Tracker Data", url = tracker_url)
+    log_action(paste0("Syncing Tracker Data: ", tracker_dat$Unit[1]),
+               url = tracker_url)
 }

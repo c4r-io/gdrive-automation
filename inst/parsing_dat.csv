@@ -5,7 +5,7 @@ phase,parse_group,task,signoff,label
 2,1,Phase 2,CENTER,Review by CENTER
 3,1,Short-form Unit Presentation,CENTER,Short-form Unit Presentation Review by CENTER
 3,2,Long-form Unit Presentation,CENTER,Long-form Unit Presentation Review by CENTER
-4,1,Activity Tech Specs,METER,Activity Tech Specs by METER
+4,1,Activity Description,METER,Activity Description by METER
 4,1,Activity Tech Specs,CENTER,Activity Tech Specs by CENTER
 4,1,Prototype,CENTER,Prototype by CENTER
 4,1,Activity Demonstration,METER,Prototype demonstration to METER
