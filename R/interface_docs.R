@@ -189,7 +189,8 @@ format_statuses <- function(statuses, title, mini_unit_names)
 
     if (num_missing_mini_units > 0)
     {
-        d <- subset(statuses, phase == activity_phase & mini_unit == 1)
+        d <- subset(statuses, phase == activity_phase & mini_unit == 1) %>%
+            dplyr::mutate(status = "Not started")
         to_add <- do.call("rbind", replicate(num_missing_mini_units, d, simplify = FALSE))
         to_add$mini_unit <- rep(seq(to = num_expected_mini_units,
                                     length.out = num_missing_mini_units),
@@ -203,14 +204,14 @@ format_statuses <- function(statuses, title, mini_unit_names)
     statuses %>%
         dplyr::arrange(phase, mini_unit) %>%
         dplyr::mutate(unit = title,
-                      phase = phase_names[.data$phase],
-                      mini_unit = mini_unit_names[.data$mini_unit]) %>%
-        dplyr::select(Unit = .data$unit,
-                      `Mini-Unit` = .data$mini_unit,
-                      Phase = .data$phase,
-                      Task = .data$task,
-                      `Signoff by` = .data$signoff,
-                      Status = .data$status)
+                      phase = phase_names[phase],
+                      mini_unit = mini_unit_names[mini_unit]) %>%
+        dplyr::select(Unit = unit,
+                      `Mini-Unit` = mini_unit,
+                      Phase = phase,
+                      Task = task,
+                      `Signoff by` = signoff,
+                      Status = status)
 }
 
 #' Extract Statuses from a Given String
