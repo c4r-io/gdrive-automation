@@ -111,7 +111,8 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                 log_action(paste0("Updating status: {\n", status_msg, "}"),
                            url = tracker_url,
                            "ACTION TAKEN")
-                notify(msg = status_msg,
+                notify(item_name = paste("New Submission:", roadmap_task),
+                       item_body = status_msg,
                        notify_text = format_notification_msg("METER to review: ", tracker_dat[i, ]),
                        to = "Hao Ye")
             } else if (roadmap_task == "Activity Tech Specs") {
@@ -120,7 +121,8 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                 log_action(paste0("Updating status: {\n", status_msg, "}"),
                            url = tracker_url,
                            "ACTION TAKEN")
-                notify(msg = status_msg,
+                notify(item_name = paste("New Submission:", roadmap_task),
+                       item_body = status_msg,
                        notify_text = format_notification_msg("Production to review: ", tracker_dat[i, ]),
                        to = "Thomas McDonald")
             } else if (roadmap_task == "Prototype") {
@@ -129,7 +131,8 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                 log_action(paste0("Updating status: {\n", status_msg, "}"),
                            url = tracker_url,
                            "ACTION TAKEN")
-                notify(msg = status_msg,
+                notify(item_name = paste("New Submission:", roadmap_task),
+                       item_body = status_msg,
                        notify_text = format_notification_msg("CENTER to review: ", tracker_dat[i, ]),
                        to = c("Thomas McDonald", "Hao Ye"))
             } else {
@@ -148,7 +151,8 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
             log_action(paste0("Updating status: {\n", status_msg, "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
-            notify(msg = status_msg,
+            notify(item_name = paste("New Submission:", roadmap_dat[i, "Task"]),
+                   item_body = status_msg,
                    notify_text = format_notification_msg("Submitted: ", roadmap_dat[i, ]),
                    to = "Hao Ye")
 
@@ -162,7 +166,8 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
             log_action(paste0("Updating status: {\n", status_msg, "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
-            notify(msg = status_msg,
+            notify(item_name = paste("New Approval:", roadmap_dat[i, "Task"]),
+                   item_body = status_msg,
                    notify_text = format_notification_msg("Approved: ", roadmap_dat[i, ]),
                    to = "Hao Ye")
 

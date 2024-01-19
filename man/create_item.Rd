@@ -4,15 +4,15 @@
 \alias{create_item}
 \title{Create a new item on the Notifications board in Monday}
 \usage{
-create_item(msg, board_id = getOption("gdrv_auto_env.monday_board_id"))
+create_item(item_name, board_id = getOption("gdrv_auto_env.monday_board_id"))
 }
 \arguments{
-\item{msg}{contents of the item to be created}
+\item{item_name}{contents of the item to be created}
 
 \item{board_id}{id of the board where the item will be added}
 }
 \value{
-character (item_id of new item)
+character (item_id of the new item)
 }
 \description{
 Create a new item on the Notifications board in Monday

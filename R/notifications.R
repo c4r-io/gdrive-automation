@@ -46,10 +46,14 @@ format_notification_msg <- function(prefix, status_row, sep = "\n")
 #'
 #' @return NULL
 #' @export
-notify <- function(msg, notify_text = "New Notification", to = "Hao Ye")
+notify <- function(item_name, item_body = "", notify_text = "New Notification", to = "Hao Ye")
 {
     notify_ids <- match_users(to)
-    item_id <- create_item(msg)
+    item_id <- create_item(item_name)
+    if (item_body != "")
+    {
+        update_item(item_body, item_id)
+    }
     for (user_id in notify_ids)
     {
         send_notification(notify_text, item_id, user_id)
@@ -80,18 +84,42 @@ send_notification <- function(msg, item_id, user_id)
     invisible()
 }
 
+#' Add an update to an existing item
+#'
+#' @param item_body contents of the update
+#' @param item_id id of the item to update (result from [create_item()])
+#'
+#' @return character (update_id of the new update)
+#' @export
+#'
+#' @examples
+update_item <- function(item_body, item_id)
+{
+    q_update_item <- jsonlite::toJSON(
+        list(query = stringr::str_glue("mutation {
+            create_update (item_id: [item_id], body: \"[item_body]\") {
+                id
+            }
+        }", .open = "[", .close = "]")),
+        auto_unbox = TRUE)
+
+    resp <- post_query(q_update_item)
+    out <- httr::content(resp)
+    out$data$create_update$id
+}
+
 #' Create a new item on the Notifications board in Monday
 #'
-#' @param msg contents of the item to be created
+#' @param item_name contents of the item to be created
 #' @param board_id id of the board where the item will be added
 #'
-#' @return character (item_id of new item)
+#' @return character (item_id of the new item)
 #' @export
-create_item <- function(msg, board_id = getOption("gdrv_auto_env.monday_board_id"))
+create_item <- function(item_name, board_id = getOption("gdrv_auto_env.monday_board_id"))
 {
     q_create_item <- jsonlite::toJSON(
         list(query = stringr::str_glue("mutation {
-            create_item (board_id: [board_id], item_name: \"[msg]\",
+            create_item (board_id: [board_id], item_name: \"[item_name]\",
                          column_values: \"{\\\"date4\\\":\\\"[Sys.Date()]\\\"}\") {
                 id
             }

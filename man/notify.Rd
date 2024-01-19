@@ -4,14 +4,19 @@
 \alias{notify}
 \title{Send notification}
 \usage{
-notify(msg, notify_text = "New Notification", to = "Hao Ye")
+notify(
+  item_name,
+  item_body = "",
+  notify_text = "New Notification",
+  to = "Hao Ye"
+)
 }
 \arguments{
-\item{msg}{contents of the notification}
-
 \item{notify_text}{message on the notification itself}
 
 \item{to}{a vector of names or emails}
+
+\item{msg}{contents of the notification}
 }
 \description{
 Send notification

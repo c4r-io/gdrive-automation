@@ -75,7 +75,8 @@ merge_todo <- function()
                                                "- action = {todo_staging$action[missing_todo_idx]}\n",
                                                "- url = {todo_staging$url[missing_todo_idx]}\n"),
                              collapse = "\n")
-        notify(msg = "Action Required on C4R Tracking Board",
+        notify(item_name = "Action Required on C4R Tracking Board",
+               item_body = notify_msg,
                notify_text = notify_msg,
                to = "Hao Ye")
 
