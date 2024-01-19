@@ -106,8 +106,8 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
 
             if (roadmap_task == "Activity Description" ||
                 roadmap_task == "Activity Demonstration") {
-            ## notify Hao for METER to review Activtiy Description OR Activity Demonstration
-                status_msg <- format_status_msg(tracker_dat[i,])
+            ## notify Hao for METER to review Activity Description OR Activity Demonstration
+                status_msg <- format_status_msg(roadmap_dat[i,])
                 log_action(paste0("Updating status: {\n", status_msg, "}"),
                            url = tracker_url,
                            "ACTION TAKEN")
@@ -116,7 +116,7 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                        to = "Hao Ye")
             } else if (roadmap_task == "Activity Tech Specs") {
             ## notify Thomas to review Activity Tech Spec
-                status_msg <- format_status_msg(tracker_dat[i,])
+                status_msg <- format_status_msg(roadmap_dat[i,])
                 log_action(paste0("Updating status: {\n", status_msg, "}"),
                            url = tracker_url,
                            "ACTION TAKEN")
@@ -125,7 +125,7 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                        to = "Thomas McDonald")
             } else if (roadmap_task == "Prototype") {
                 ## notify Hao and Thomas to review Prototype
-                status_msg <- format_status_msg(tracker_dat[i,])
+                status_msg <- format_status_msg(roadmap_dat[i,])
                 log_action(paste0("Updating status: {\n", status_msg, "}"),
                            url = tracker_url,
                            "ACTION TAKEN")
@@ -134,7 +134,7 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                        to = c("Thomas McDonald", "Hao Ye"))
             } else {
                 stage_todo(paste0("Unknown Status Difference: {\n",
-                                  format_status_msg(tracker_dat[i,]),
+                                  format_status_msg(roadmap_dat[i,]),
                                   "}"),
                            url = roadmap_url)
             }
@@ -144,12 +144,12 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
             # take action for submission
 
             tracker_dat$Status[i] <- roadmap_status
-            status_msg <- format_status_msg(tracker_dat[i,])
+            status_msg <- format_status_msg(roadmap_dat[i,])
             log_action(paste0("Updating status: {\n", status_msg, "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
             notify(msg = status_msg,
-                   notify_text = format_notification_msg("Submitted: ", tracker_dat[i, ]),
+                   notify_text = format_notification_msg("Submitted: ", roadmap_dat[i, ]),
                    to = "Hao Ye")
 
         } else if (roadmap_status == "Approved" &&
@@ -158,12 +158,12 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
             # take action for approval
 
             tracker_dat$Status[i] <- roadmap_status
-            status_msg <- format_status_msg(tracker_dat[i,])
+            status_msg <- format_status_msg(roadmap_dat[i,])
             log_action(paste0("Updating status: {\n", status_msg, "}"),
                        url = tracker_url,
                        "ACTION TAKEN")
             notify(msg = status_msg,
-                   notify_text = format_notification_msg("Approved: ", tracker_dat[i, ]),
+                   notify_text = format_notification_msg("Approved: ", roadmap_dat[i, ]),
                    to = "Hao Ye")
 
         } else if (tracker_status == "Approved" &&
@@ -172,7 +172,7 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
             # log action needed (update roadmap)
 
             stage_todo(paste0("Approve: {\n",
-                              format_status_msg(tracker_dat[i,]),
+                              format_status_msg(roadmap_dat[i,]),
                               "}"),
                        url = roadmap_url)
         } else {
@@ -180,7 +180,7 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
             # log action needed
 
             stage_todo(paste0("Unknown Status Difference: {\n",
-                              format_status_msg(tracker_dat[i,]),
+                              format_status_msg(roadmap_dat[i,]),
                               "}"),
                        url = roadmap_url)
         }

@@ -44,8 +44,8 @@ There are 4 states for the status, which generally progresses from:
 
 “Not started” -\> “Submitted” -\> “Under review” -\> “Approved”
 
-The below documentation clarifies how to resolve situations where the
-status for a particular item is different in the roadmap vs. the
+The below describes the general procedure for resolving situations where
+the status for a particular item is different in the roadmap vs. the
 tracker.
 
 ### Case 0. Identical Status

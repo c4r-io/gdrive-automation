@@ -11,12 +11,18 @@
 format_status_msg <- function(status_row, sep = "\n")
 {
     stopifnot(NROW(status_row) == 1)
-    paste0("unit: ", status_row$Unit, sep,
+    result <- paste0("unit: ", status_row$Unit, sep,
            "mini-unit: ", status_row$`Mini-Unit`, sep,
            "phase: ", status_row$Phase, sep,
            "task: ", status_row$Task, sep,
            "signoff by: ", status_row$`Signoff by`, sep,
            "status: ", status_row$Status, sep)
+    if (!is.na(status_row$notes))
+    {
+        result <- paste0(result,
+                         "notes: ", status_row$notes, sep)
+    }
+    result
 }
 
 #' @rdname msg

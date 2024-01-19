@@ -12,7 +12,7 @@ read_roadmap_statuses <- function(roadmap_url, dl_path = tempfile(fileext = ".do
 
     ## read in docx
     roadmap <- officer::read_docx(dl_path)
-    content <- officer::docx_summary(roadmap)
+    content <- officer::docx_summary(roadmap, preserve = TRUE)
 
     # find title
     title <- extract_roadmap_title(content)
@@ -114,7 +114,7 @@ extract_roadmap_statuses <- function(content)
     ## setup loop
     statuses_df <- data.frame(phase = numeric(), mini_unit = numeric(),
                               task = character(), signoff = character(),
-                              status = character())
+                              status = character(), notes = character())
     prev_phase <- 0
     curr_mini_unit <- NA
 
@@ -123,7 +123,7 @@ extract_roadmap_statuses <- function(content)
     #    identify phase
     #    identify parse group
     #    perform parsing of statuses
-    #   identify appopriate parsing
+    #    identify appropriate parsing
     for (curr_signoff_doc_index in signoff_labels$doc_index)
     {
         # find next table after "sign off" label
@@ -158,6 +158,15 @@ extract_roadmap_statuses <- function(content)
         # perform parsing of statuses
         status_format <- subset(parsing_dat, phase == curr_phase & parse_group == parse_grp_idx)
         result <- parse_statuses(curr_statuses$text, status_format)
+
+        # if activity phase, find activity description box
+        if (curr_phase == getOption("gdrv_auto_env.statuses.activity_phase"))
+        {
+            prev_tables <- subset(content,
+                         content_type %in% "table cell" &
+                             doc_index < curr_statuses$doc_index)
+            result$notes <- tail(prev_tables, 1)$text
+        }
         result$phase <- curr_phase
         result$mini_unit <- curr_mini_unit
         statuses_df <- rbind(statuses_df, result)
@@ -190,7 +199,7 @@ format_statuses <- function(statuses, title, mini_unit_names)
     if (num_missing_mini_units > 0)
     {
         d <- subset(statuses, phase == activity_phase & mini_unit == 1) %>%
-            dplyr::mutate(status = "Not started")
+            dplyr::mutate(status = "Not started", notes = NA)
         to_add <- do.call("rbind", replicate(num_missing_mini_units, d, simplify = FALSE))
         to_add$mini_unit <- rep(seq(to = num_expected_mini_units,
                                     length.out = num_missing_mini_units),
@@ -211,7 +220,8 @@ format_statuses <- function(statuses, title, mini_unit_names)
                       Phase = phase,
                       Task = task,
                       `Signoff by` = signoff,
-                      Status = status)
+                      Status = status,
+                      notes)
 }
 
 #' Extract Statuses from a Given String
@@ -225,5 +235,6 @@ parse_statuses <- function(string, status_format)
 {
     data.frame(task = status_format$task,
                signoff = status_format$signoff,
-               status = stringr::str_extract(string, status_format$pattern, group = 1))
+               status = stringr::str_extract(string, status_format$pattern, group = 1),
+               notes = NA)
 }
