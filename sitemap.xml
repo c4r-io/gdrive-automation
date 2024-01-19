@@ -151,6 +151,9 @@
     <loc>/reference/title.html</loc>
   </url>
   <url>
+    <loc>/reference/update_item.html</loc>
+  </url>
+  <url>
     <loc>/reference/update_tracker_data.html</loc>
   </url>
 </urlset>
