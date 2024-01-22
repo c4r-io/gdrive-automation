@@ -1,6 +1,6 @@
 #' Format a status row for printing
 #'
-#' @descrption `format_status_msg()` contains all the details of a status update, whereas `format_notification_msg()` has just the phase number and the task
+#' @description `format_status_msg()` contains all the details of a status update, whereas `format_notification_msg()` has just the phase number and the task
 #'
 #' @param status_row a single row of a `statuses` object
 #' @param sep character to separate each element in formatted output
@@ -91,8 +91,6 @@ send_notification <- function(msg, item_id, user_id)
 #'
 #' @return character (update_id of the new update)
 #' @export
-#'
-#' @examples
 update_item <- function(item_body, item_id)
 {
     q_update_item <- jsonlite::toJSON(

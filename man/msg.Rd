@@ -21,5 +21,5 @@ format_notification_msg(prefix, status_row, sep = "\\n")
 character (formatted message)
 }
 \description{
-Format a status row for printing
+\code{format_status_msg()} contains all the details of a status update, whereas \code{format_notification_msg()} has just the phase number and the task
 }
