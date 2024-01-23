@@ -31,13 +31,7 @@ Results:
 * The decryption key can live as a github secret that enables github actions to use the token for access
 
 ```{r create token}
-# set up a local file cache for a new token
-options(gargle_oauth_cache = ".secrets")
-gargle::gargle_oauth_cache()
-
-# create a new token
-drive_auth(email = TRUE, scopes = "https://www.googleapis.com/auth/drive")
-my_token <- drive_token()
+my_token <- drive_auth(email = TRUE, scopes = "https://www.googleapis.com/auth/drive", cache = FALSE)
 ```
 
 ```{r setup encryption key}
@@ -50,6 +44,8 @@ usethis::edit_r_environ() # run this to open your .Renviron file
 ```
 
 ```{r encrypt a new token and save it in inst/secrets/gs4-auth.token}
+dir.create(".secrets")
+
 gargle::secret_write_rds(
     x = my_token, 
     path = ".secrets/gdrive-token.rds", 
