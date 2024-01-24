@@ -20,7 +20,8 @@ Imports:
     officer,
     rlang,
     stringr,
-    testthat
+    testthat,
+    utils
 Suggests: 
     knitr,
     rmarkdown

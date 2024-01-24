@@ -165,7 +165,7 @@ extract_roadmap_statuses <- function(content)
             prev_tables <- subset(content,
                          content_type %in% "table cell" &
                              doc_index < curr_statuses$doc_index)
-            result$notes <- tail(prev_tables, 1)$text
+            result$notes <- utils::tail(prev_tables, 1)$text
         }
         result$phase <- curr_phase
         result$mini_unit <- curr_mini_unit

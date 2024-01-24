@@ -4,7 +4,6 @@
 #'
 #' @param status_row a single row of a `statuses` object
 #' @param sep character to separate each element in formatted output
-#' @name msg
 #'
 #' @return character (formatted message)
 #' @export
@@ -25,7 +24,7 @@ format_status_msg <- function(status_row, sep = "\n")
     result
 }
 
-#' @rdname msg
+#' @rdname format_status_msg
 #'
 #' @param prefix optional string to put in front of message
 #'
@@ -40,7 +39,8 @@ format_notification_msg <- function(prefix, status_row, sep = "\n")
 
 #' Send notification
 #'
-#' @param msg contents of the notification
+#' @param item_name name of the Monday item to be created
+#' @param item_body contents of the Monday item (added as an update)
 #' @param notify_text message on the notification itself
 #' @param to a vector of names or emails
 #'

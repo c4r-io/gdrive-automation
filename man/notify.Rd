@@ -12,11 +12,13 @@ notify(
 )
 }
 \arguments{
+\item{item_name}{name of the Monday item to be created}
+
+\item{item_body}{contents of the Monday item (added as an update)}
+
 \item{notify_text}{message on the notification itself}
 
 \item{to}{a vector of names or emails}
-
-\item{msg}{contents of the notification}
 }
 \description{
 Send notification
