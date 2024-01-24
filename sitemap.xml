@@ -67,6 +67,9 @@
     <loc>/reference/fix_loop_num.html</loc>
   </url>
   <url>
+    <loc>/reference/format_status_msg.html</loc>
+  </url>
+  <url>
     <loc>/reference/format_statuses.html</loc>
   </url>
   <url>
@@ -110,9 +113,6 @@
   </url>
   <url>
     <loc>/reference/mini_units.html</loc>
-  </url>
-  <url>
-    <loc>/reference/msg.html</loc>
   </url>
   <url>
     <loc>/reference/notify.html</loc>
