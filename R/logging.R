@@ -15,7 +15,7 @@ log_action <- function(action = "", url = "", type = "INFO", loop_num = NULL)
     loop_num <- fix_loop_num(loop_num)
 
     my_log <- access_log()
-    log_row <- data.frame(datetime = format(Sys.time(), "%Y-%m-%d %X %Z"),
+    log_row <- data.frame(datetime = format(Sys.time(), "%F %T %Z", tz = "America/New_York"),
                           action = action,
                           url = url,
                           type = type,
@@ -40,7 +40,7 @@ stage_todo <- function(action = "", url = "", loop_num = NULL)
     loop_num <- fix_loop_num(loop_num)
 
     my_log <- access_log()
-    log_row <- data.frame(datetime = format(Sys.time(), "%Y-%m-%d %X %Z"),
+    log_row <- data.frame(datetime = format(Sys.time(), "%F %T %Z", tz = "America/New_York"),
                           action = action,
                           url = url,
                           loop_num = loop_num)
