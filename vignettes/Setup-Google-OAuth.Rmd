@@ -31,7 +31,10 @@ Results:
 * The decryption key can live as a github secret that enables github actions to use the token for access
 
 ```{r create token}
-my_token <- drive_auth(email = TRUE, scopes = "https://www.googleapis.com/auth/drive", cache = FALSE)
+drive_auth(email = TRUE, scopes = "https://www.googleapis.com/auth/drive", cache = FALSE)
+
+my_token <- drive_token()
+
 ```
 
 ```{r setup encryption key}

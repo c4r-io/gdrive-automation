@@ -36,3 +36,41 @@ find_files_roadmaps <- function()
     c4r_drive <- "(C4R) Community for Rigor"
     googledrive::drive_find("Unit Roadmap", shared_drive = c4r_drive)
 }
+
+#' Download Data on Units and Statuses
+#'
+#' @param data_file path to the desired download location
+#'
+#' @return a list with components for the statuses, units, and timestamp
+#' @export
+download_unit_data <- function(data_file = "unit_data.RDS")
+{
+    gdrv_auth()
+
+    unit_data <- read_db_units()
+    tracker_urls <- unit_data$`unit tasks URL`
+    tracker_sheets <- unit_data$`Sheet Name`
+    unit_statuses <- list()
+
+    for (idx in seq(NROW(unit_data)))
+    {
+        tracker_url <- tracker_urls[idx]
+        tracker_sheet <- tracker_sheets[idx]
+
+        if (anyNA(c(tracker_url, tracker_sheet)))
+        {
+            next
+        }
+
+        statuses <- read_tracker_statuses(tracker_url, tracker_sheet)
+        statuses$unit_id <- unit_data$`unit-id`[idx]
+        unit_statuses[[idx]] <- statuses
+    }
+    unit_statuses <- do.call(rbind, unit_statuses)
+
+    result <- list(unit_statuses = unit_statuses,
+                   unit_data = unit_data,
+                   timestamp = Sys.time())
+    saveRDS(result, data_file)
+    result
+}
