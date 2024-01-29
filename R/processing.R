@@ -157,8 +157,8 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
                    to = "Hao Ye")
 
         } else if (roadmap_status == "Approved" &&
-                   roadmap_dat$`Signoff by`[i] == "METER") {
-            # if roadmap is approved and signoff is by METER
+                   roadmap_dat$`Signoff by`[i] != "CENTER") {
+            # if roadmap is approved and signoff is by METER or NIH
             # take action for approval
 
             tracker_dat$Status[i] <- roadmap_status
