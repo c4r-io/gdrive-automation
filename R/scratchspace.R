@@ -2,6 +2,7 @@ update_parsing_dat <- FALSE
 run_sync <- FALSE
 check_roadmap_files <- FALSE
 test_roadmap <- FALSE
+generate_new_oauth_token <- FALSE
 
 if (update_parsing_dat)
 {
@@ -67,3 +68,12 @@ if (run_sync)
 
     log_action("Ending Processing Loop")
 }
+
+if (generate_new_oauth_token)
+{
+    googledrive::drive_auth_configure(path = ".secrets/gdrive-oauth.json")
+    googledrive::drive_oauth_client()
+}
+
+
+
