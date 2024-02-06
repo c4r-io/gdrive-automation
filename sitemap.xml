@@ -1,162 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/LICENSE.html</loc>
   </url>
   <url>
-    <loc>/articles/Setup-Google-OAuth.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/articles/Setup-Google-OAuth.html</loc>
   </url>
   <url>
-    <loc>/articles/gdrive-automation.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/articles/gdrive-automation.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/articles/index.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/index.html</loc>
   </url>
   <url>
-    <loc>/reference/access_log.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/access_log.html</loc>
   </url>
   <url>
-    <loc>/reference/as_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/as_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/check_files_roadmap.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/check_files_roadmap.html</loc>
   </url>
   <url>
-    <loc>/reference/check_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/check_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/create_item.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/create_item.html</loc>
   </url>
   <url>
-    <loc>/reference/decrypt_gdrive_token.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/decrypt_gdrive_token.html</loc>
   </url>
   <url>
-    <loc>/reference/download_unit_data.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/download_unit_data.html</loc>
   </url>
   <url>
-    <loc>/reference/extract_roadmap_mini_units.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/extract_roadmap_mini_units.html</loc>
   </url>
   <url>
-    <loc>/reference/extract_roadmap_phases.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/extract_roadmap_phases.html</loc>
   </url>
   <url>
-    <loc>/reference/extract_roadmap_signoffs.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/extract_roadmap_signoffs.html</loc>
   </url>
   <url>
-    <loc>/reference/extract_roadmap_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/extract_roadmap_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/extract_roadmap_title.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/extract_roadmap_title.html</loc>
   </url>
   <url>
-    <loc>/reference/find_files_roadmaps.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/find_files_roadmaps.html</loc>
   </url>
   <url>
-    <loc>/reference/fix_loop_num.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/fix_loop_num.html</loc>
   </url>
   <url>
-    <loc>/reference/format_status_msg.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/format_status_msg.html</loc>
   </url>
   <url>
-    <loc>/reference/format_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/format_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/gdrive.automation-package.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/gdrive.automation-package.html</loc>
   </url>
   <url>
-    <loc>/reference/gdrv_auth.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/gdrv_auth.html</loc>
   </url>
   <url>
-    <loc>/reference/get_last_loop_num.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/get_last_loop_num.html</loc>
   </url>
   <url>
-    <loc>/reference/get_monday_token.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/get_monday_token.html</loc>
   </url>
   <url>
-    <loc>/reference/get_users.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/get_users.html</loc>
   </url>
   <url>
-    <loc>/reference/handle_diff_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/handle_diff_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/identify_todo.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/identify_todo.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/is.statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/is.statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/log_action.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/log_action.html</loc>
   </url>
   <url>
-    <loc>/reference/match_users.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/match_users.html</loc>
   </url>
   <url>
-    <loc>/reference/merge_todo.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/merge_todo.html</loc>
   </url>
   <url>
-    <loc>/reference/mini_units-set.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/mini_units-set.html</loc>
   </url>
   <url>
-    <loc>/reference/mini_units.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/mini_units.html</loc>
   </url>
   <url>
-    <loc>/reference/notify.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/notify.html</loc>
   </url>
   <url>
-    <loc>/reference/parse_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/parse_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/pipe.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/pipe.html</loc>
   </url>
   <url>
-    <loc>/reference/post_query.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/post_query.html</loc>
   </url>
   <url>
-    <loc>/reference/read_db_units.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/read_db_units.html</loc>
   </url>
   <url>
-    <loc>/reference/read_roadmap_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/read_roadmap_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/read_tracker_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/read_tracker_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/send_notification.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/send_notification.html</loc>
   </url>
   <url>
-    <loc>/reference/set_loop_num_var.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/set_loop_num_var.html</loc>
   </url>
   <url>
-    <loc>/reference/stage_todo.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/stage_todo.html</loc>
   </url>
   <url>
-    <loc>/reference/sync_statuses.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/sync_statuses.html</loc>
   </url>
   <url>
-    <loc>/reference/title-set.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/title-set.html</loc>
   </url>
   <url>
-    <loc>/reference/title.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/title.html</loc>
   </url>
   <url>
-    <loc>/reference/update_item.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/update_item.html</loc>
   </url>
   <url>
-    <loc>/reference/update_tracker_data.html</loc>
+    <loc>https://c4r-io.github.io/gdrive-automation/reference/update_tracker_data.html</loc>
   </url>
 </urlset>
