@@ -4,7 +4,7 @@
 \alias{sync_statuses}
 \title{Get Statuses Data and Process}
 \usage{
-sync_statuses(roadmap_url, tracker_url, tracker_sheet)
+sync_statuses(roadmap_url, tracker_url, tracker_sheet, unit_id = "")
 }
 \arguments{
 \item{roadmap_url}{URL of a google doc (Unit Roadmap)}
@@ -12,6 +12,8 @@ sync_statuses(roadmap_url, tracker_url, tracker_sheet)
 \item{tracker_url}{URL of a google sheet (Unit Tracker)}
 
 \item{tracker_sheet}{name of the google sheet for the specific unit's tasks}
+
+\item{unit_id}{unit id}
 }
 \description{
 Get Statuses Data and Process

@@ -62,7 +62,8 @@ if (run_sync)
         roadmap_url <- roadmap_urls[idx]
         tracker_url <- tracker_urls[idx]
         tracker_sheet <- tracker_sheets[idx]
-        sync_statuses(roadmap_url, tracker_url, tracker_sheet)
+        unit_id <- db_units[[idx, "unit-id"]]
+        sync_statuses(roadmap_url, tracker_url, tracker_sheet, unit_id)
         merge_todo()
     }
 
