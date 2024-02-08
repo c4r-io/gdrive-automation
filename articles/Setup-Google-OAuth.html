@@ -86,7 +86,8 @@ variable</p>
 The decryption key can live as a github secret that enables github
 actions to use the token for access</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_auth.html" class="external-link">drive_auth</a></span><span class="op">(</span>email <span class="op">=</span> <span class="cn">TRUE</span>, scopes <span class="op">=</span> <span class="st">"https://www.googleapis.com/auth/drive"</span>, cache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_auth_configure.html" class="external-link">drive_auth_configure</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">".secrets/gdrive-oauth.json"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_auth.html" class="external-link">drive_auth</a></span><span class="op">(</span>email <span class="op">=</span> <span class="cn">TRUE</span>, scopes <span class="op">=</span> <span class="st">"https://www.googleapis.com/auth/drive"</span>, cache <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">my_token</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_token.html" class="external-link">drive_token</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
