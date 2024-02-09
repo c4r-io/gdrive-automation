@@ -24,6 +24,19 @@ log_action <- function(action = "", url = "", type = "INFO", loop_num = NULL)
     invisible()
 }
 
+#' generate status update content
+#'
+#' @param status_msg formatted status msg
+#' @param tracker_url URL of a google sheet (Unit Tracker)
+#'
+#' @return NULL
+log_status_update <- function(status_msg, tracker_url)
+{
+    log_action(paste0("Updating status: {\n", status_msg, "}"),
+               url = tracker_url,
+               "ACTION TAKEN")
+}
+
 #' Record a todo in the log
 #'
 #' All changes to files in the C4R googledrive that are performed by this

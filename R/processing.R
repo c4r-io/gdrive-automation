@@ -100,7 +100,8 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
         tracker_status <- tracker_dat[i, "Status"]
         phase <- match(roadmap_dat[i, "Phase"], getOption("gdrv_auto_env.phase_names"))
         status_msg <- format_status_msg(roadmap_dat[i,])
-        roadmap_task <- roadmap_dat[i, "Task"]
+        task <- roadmap_dat[i, "Task"]
+        signoff_by <- roadmap_dat$`Signoff by`[i]
         unit_id <- roadmap_dat[i, "unit_id"]
 
         if (roadmap_status == "Submitted" &&
@@ -147,49 +148,36 @@ handle_diff_statuses <- function(roadmap_dat, roadmap_url,
 
             notify(item_name = paste("New Submission:", unit_id, "-", roadmap_task),
                    item_body = status_msg,
-                   notify_text = format_notification_msg("Submitted: ", roadmap_dat[i, ]),
+                   notify_text = format_notification_msg("CENTER to review: ", roadmap_dat[i, ]),
                    to = "Hao Ye")
+        } else if (roadmap_status == "Under review") {
+            # if roadmap is under review
+            log_status_update(status_msg, tracker_url)
+            tracker_dat$Status[i] <- roadmap_status
 
-        } else if (roadmap_status == "Approved" &&
-                   roadmap_dat$`Signoff by`[i] != "CENTER") {
-            # if roadmap is approved and signoff is by METER or NIH
+            notify(item_name = paste("Now in Review:", unit_id, "-", roadmap_task),
+                   item_body = status_msg,
+                   notify_text = format_notification_msg(paste(signoff_by, "reviewing: "), roadmap_dat[i, ]),
+                   to = "Hao Ye")
+        } else if (roadmap_status == "Approved") {
+            # if roadmap is approved
             # take action for approval
             log_status_update(status_msg, tracker_url)
             tracker_dat$Status[i] <- roadmap_status
 
             notify(item_name = paste("New Approval:", unit_id, "-", roadmap_task),
                    item_body = status_msg,
-                   notify_text = format_notification_msg("Approved: ", roadmap_dat[i, ]),
+                   notify_text = format_notification_msg(paste(signoff_by, "Approved: "), roadmap_dat[i, ]),
                    to = "Hao Ye")
 
-        } else if (tracker_status == "Approved" &&
-                   roadmap_status != "Approved") {
-            # if tracker is approved and roadmap is not approved
-            # log action needed (update roadmap)
-
-            stage_todo(paste0("Approve: {\n", status_msg, "}"),
-                       url = roadmap_url)
         } else {
             # if any other discrepancy
             # log action needed
 
-            stage_todo(paste0("Unknown Status Difference: {\n", status_msg, "}"),
+            stage_todo(paste0("Unhandled Status Difference: {\n", status_msg, "}"),
                        url = roadmap_url)
         }
     }
 
     tracker_dat
-}
-
-#' generate status update content
-#'
-#' @param status_msg formatted status msg
-#' @param tracker_url URL of a google sheet (Unit Tracker)
-#'
-#' @return
-log_status_update <- function(status_msg, tracker_url)
-{
-    log_action(paste0("Updating status: {\n", status_msg, "}"),
-               url = tracker_url,
-               "ACTION TAKEN")
 }
