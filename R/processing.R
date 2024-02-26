@@ -74,7 +74,10 @@ sync_statuses <- function(roadmap_url, tracker_url, tracker_sheet, unit_id = "")
 
     }, error = function(e) {
         log_action(e$message, url = roadmap_url, type = "ERROR")
-    })
+    }, warning = function(w) {
+        log_action(w$message, url = roadmap_url, type = "WARNING")
+    }
+    )
 
     invisible()
 }

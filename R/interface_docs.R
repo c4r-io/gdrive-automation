@@ -53,7 +53,11 @@ extract_roadmap_mini_units <- function(content)
     tt <- table(table_cells$doc_index)
     mini_unit_doc_index <- max(as.numeric(names(tt)[tt == max(tt)]))
     mini_unit_table <- subset(table_cells, doc_index == mini_unit_doc_index)
-    stopifnot(NROW(mini_unit_table) == 5 * (num_mini_units + 1))
+    stopifnot(NROW(mini_unit_table) >= 5 * (num_mini_units + 1))
+    if (NROW(mini_unit_table) > 5 * (num_mini_units + 1))
+    {
+        warning("Table of Mini-Units has too many rows")
+    }
     mini_unit_table$text[seq(from = 2, length.out = num_mini_units)]
 }
 
