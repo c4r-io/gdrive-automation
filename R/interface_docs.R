@@ -11,7 +11,7 @@ read_roadmap_statuses <- function(roadmap_url, dl_path = tempfile(fileext = ".do
     googledrive::drive_download(roadmap_url, dl_path)
 
     ## read in docx
-    roadmap <- officer::read_docx(dl_path)
+    roadmap <- suppressWarnings(officer::read_docx(dl_path))
     content <- officer::docx_summary(roadmap, preserve = TRUE)
 
     # find title
