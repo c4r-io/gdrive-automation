@@ -7,6 +7,8 @@ Authors@R:
 Description: The goal of gdrive-automation is to automate processing and tasks related to the C4R Shared Drive, to aid in synchronization of states and content.
 License: MIT + file LICENSE
 Encoding: UTF-8
+URL: https://c4r-io.github.io/gdrive-automation/
+BugReports: https://github.com/c4r-io/gdrive-automation/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Imports: 
