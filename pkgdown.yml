@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   Setup-Google-OAuth: Setup-Google-OAuth.html
   gdrive-automation: gdrive-automation.html
-last_built: 2024-03-01T22:44Z
+last_built: 2024-03-14T16:04Z
 urls:
   reference: https://c4r-io.github.io/gdrive-automation/reference
   article: https://c4r-io.github.io/gdrive-automation/articles
