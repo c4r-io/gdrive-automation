@@ -19,8 +19,11 @@ read_db_units <- function(id = getOption("gdrv_auto_env.URL_db_units"))
 #' @export
 read_tracker_statuses <- function(url, sheet = "unit 1")
 {
-    googlesheets4::read_sheet(url, sheet, skip = 1, trim_ws = FALSE) %>%
+    statuses_colnames <- c("Unit", "Mini-Unit", "Phase", "Task", "Signoff by", "Status")
+    result <- googlesheets4::read_sheet(url, sheet, skip = 1, trim_ws = FALSE) %>%
         as_statuses()
+    stopifnot(identical(names(results), statuses_colnames))
+    dplyr::select(result, statuses_colnames)
 }
 
 #' Update the tracker data
