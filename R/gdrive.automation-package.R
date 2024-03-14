@@ -31,6 +31,9 @@ utils::globalVariables(".data")
         # board id for notifications
         gdrv_auto_env.monday_board_id = "5704206865",
 
+                # column names for tracker statuses
+        gdrv_auto_env.statuses.columns = c("Unit", "Mini-Unit", "Phase", "Task", "Signoff by", "Status"),
+
         # regex Pattern for Allowed Statuses
         gdrv_auto_env.statuses.regex_pattern = "Submitted|Under review|Approved|Not started",
 

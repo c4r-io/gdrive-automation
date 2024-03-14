@@ -19,7 +19,8 @@ read_db_units <- function(id = getOption("gdrv_auto_env.URL_db_units"))
 #' @export
 read_tracker_statuses <- function(url, sheet = "unit 1")
 {
-    statuses_colnames <- c("Unit", "Mini-Unit", "Phase", "Task", "Signoff by", "Status")
+    statuses_colnames <- getOption("gdrv_auto_env.statuses.columns")
+        c("Unit", "Mini-Unit", "Phase", "Task", "Signoff by", "Status")
     result <- googlesheets4::read_sheet(url, sheet, skip = 1, trim_ws = FALSE) %>%
         as_statuses()
     stopifnot(identical(names(result), statuses_colnames))
@@ -36,8 +37,10 @@ read_tracker_statuses <- function(url, sheet = "unit 1")
 #' @export
 update_tracker_data <- function(tracker_dat, tracker_url, tracker_sheet)
 {
+    statuses_colnames <- getOption("gdrv_auto_env.statuses.columns")
+    to_write <- dplyr::select(tracker_dat, statuses_colnames)
     googlesheets4::range_write(tracker_url,
-                               tracker_dat,
+                               to_write,
                                tracker_sheet,
                                range = "A3",
                                col_names = FALSE,
