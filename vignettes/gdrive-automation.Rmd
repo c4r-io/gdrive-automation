@@ -14,6 +14,30 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Overview
+
+This vignette acts as a how-to guide to the primary functions of the package, and its operation.
+
+# Operation
+
+## Setup
+
+1. Load the package
+
 ```{r setup}
 library(gdrive.automation)
 ```
+
+2. Try authenticating to the google drive and google sheets. If successful, nothing should happen.
+
+```{r}
+gdrv_auth()
+```
+
+3. Get initial information on units.
+
+```{r}
+db_units <- read_db_units()
+```
+
+

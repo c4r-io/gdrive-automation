@@ -25,12 +25,16 @@ decrypt_gdrive_token <- function(token_file = ".secrets/gdrive-token.rds",
                                  decrypt_env_var = "GDRIVE_KEY")
 {
     token <- NULL
-    if (gargle::secret_has_key(decrypt_env_var))
+    if (!gargle::secret_has_key(decrypt_env_var))
     {
-        token <- gargle::secret_read_rds(token_file,
-                                key = decrypt_env_var)
+        stop("Could not find decrypt key with environmental variable name @ `", decrypt_env_var, "`")
+    }
+    if (!file.exists(token_file))
+    {
+        stop("Could not find token file @ `", token_file, "`")
     }
 
+    token <- gargle::secret_read_rds(token_file, decrypt_env_var)
     invisible(token)
 }
 
