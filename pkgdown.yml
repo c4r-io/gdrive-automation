@@ -1,11 +1,10 @@
 pandoc: 3.1.11
-pkgdown: 2.0.7
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  Setup-Google-OAuth: Setup-Google-OAuth.html
   gdrive-automation: gdrive-automation.html
-last_built: 2024-03-14T17:06Z
+  Setup-Google-OAuth: Setup-Google-OAuth.html
+last_built: 2024-10-11T19:55Z
 urls:
   reference: https://c4r-io.github.io/gdrive-automation/reference
   article: https://c4r-io.github.io/gdrive-automation/articles
-
